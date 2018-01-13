@@ -106,14 +106,14 @@ public class ClockLogic {
 	}
 
 	private void calculateAll() {
-		this.calculateWeeklyTime();
 		this.calculateShiftTime();
 		this.calculateShiftPay();
+		this.calculateWeeklyTime();
 		this.convertWeekTimeToHours();
 		this.calculateUpdatedWeeklyPay();
 	}
 
-	public void calculateWeeklyTime() {
+	private void calculateWeeklyTime() {
 		long shift = this.getShiftTime();
 		shift += this.getCurrentWeekTime();
 		setUpdatedWeekTime(shift);
@@ -124,7 +124,8 @@ public class ClockLogic {
 	}
 
 	private void calculateShiftPay() {
-		setShiftPay(this.getShiftTime() * this.getPayRate());
+		double shiftTimeInHours = ((double)getShiftTime() / 3600000);
+		setShiftPay(shiftTimeInHours * this.getPayRate());
 	}
 	
 	private void convertWeekTimeToHours() {
@@ -133,7 +134,7 @@ public class ClockLogic {
 	}
 
 	private void calculateUpdatedWeeklyPay() {
-		double updatedWeeklyPay = this.getUpdatedWeekTime() * this.getPayRate();
+		double updatedWeeklyPay = this.getUpdatedWeekTimeInHours() * this.getPayRate();
 		this.setWeeklyPay(updatedWeeklyPay);
 	}
 

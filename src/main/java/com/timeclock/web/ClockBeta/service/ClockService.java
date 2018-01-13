@@ -29,13 +29,13 @@ public class ClockService {
 	JobsService jobsService;
 	
 	@Autowired
-	ClockLogic cl;
+	ClockLogic clockLogic;
 
 	@Autowired 
 	UserAuthDetails userAuthDetails;
 	
 	public void handleClockInOut(int id) {
-		if (this.findClockedById(id)) {
+		if (this.findClockedInById(id)) {
 			this.clockOut(id);
 		} else {
 			this.clockIn(id);
@@ -46,7 +46,7 @@ public class ClockService {
 	* Original Clock In Without Job ID
 	*/
 	public void clockIn(int id) {
-		if (!this.findClockedById(id)) {
+		if (!this.findClockedInById(id)) {
 			Date d = new Date();
 			clockRepository.updateClock(id, d, d);
 		}
@@ -56,103 +56,125 @@ public class ClockService {
 	* Original Clock Out Without Job ID
 	*/
 	public void clockOut(int id) {
-		if (this.findClockedById(id)) {
-			Date d = new Date();
-			Date startTime = clockRepository.findStartTimeById(id);
-			Date lastRefreshTime = clockRepository.findLastRefreshById(id);
-			long currentWeek = clockRepository.findWeekTimeById(id);
-			cl.setWeeklyTime(currentWeek);
-			long shift = cl.getShiftTime();
-			double payRate = clockRepository.findPayRateById(id);
-			double exactWeeklyTime = cl.longToDoubleInHours(cl.getWeeklyTime());
-			double weeklyHours = cl.timeToHours(cl.getWeeklyTime());
-			double weeklyPay = cl.calculatePay(exactWeeklyTime, payRate);
-			cl.calcShiftTime(lastRefreshTime, d);
-			cl.calcWeeklyTime(currentWeek, shift);
-			clockRepository.updateClock(id, d, cl.getShiftTime(), cl.getWeeklyTime(), weeklyHours, weeklyPay);
-			historyService.saveHistory(id, startTime, d, shift);
-		}
+        clockOutIfClockedInWithoutJobId(id);
 	}
 
 	/*
 	* Clock In With Job ID
 	*/
 	public void clockInAtJob(int id, int jobId) {
-		if (!this.findClockedById(id)) {
+		if (!this.findClockedInById(id)) {
 			Date d = new Date();
 			clockRepository.clockIn(id, jobId, d, d);
 		}
 	}
 
 	/*
-	* Clock Out With Job ID... Sorry for long lines; sacrificed less lines for longer lines.
+	* Clock Out With Job ID
 	*/
 	public void clockOutFromJob(int id, int jobId) {
-		if (this.findClockedById(id)) {
-			Date d = new Date();
-			Date startTime = clockRepository.findStartTimeById(id);
-			Date lastRefreshTime = clockRepository.findLastRefreshById(id);
-			if (lastRefreshTime.after(startTime)) {
-				cl.calcShiftTime(lastRefreshTime, d);
-			} else {
-				cl.calcShiftTime(startTime, d);
-			}
-			double shiftPay = cl.calculatePay(cl.longToDoubleInHours(cl.getShiftTime()), clockRepository.findPayRateById(id));
-			cl.calcWeeklyTime(clockRepository.findWeekTimeById(id), cl.getShiftTime());
-			double weeklyPay = cl.calculatePay(cl.longToDoubleInHours(cl.getWeeklyTime()), clockRepository.findPayRateById(id));
-			clockRepository.clockOut(
-					id,
-					jobId,
-					d,
-					cl.getShiftTime(),
-					cl.getWeeklyTime(),
-					cl.timeToHours(cl.getWeeklyTime()),
-					weeklyPay
-			);
-			jobsService.updateLaborCost(jobId, shiftPay);
-			historyService.saveHistory(id, startTime, d, cl.getShiftTime());
+		clockOutIfClockedIn(id, jobId);
+	}
+
+	private void handleClockOut(int employeeId, int jobId) {
+		initializeClockLogicForEmployee(employeeId);
+		updateEmployeeDataUponClockOut(employeeId, jobId);
+		updateLaborCost(jobId);
+		updateHistory(employeeId);
+	}
+
+	private void clockOutIfClockedIn(int employeeId, int jobId) {
+		if (findClockedInById(employeeId)) {
+			handleClockOut(employeeId, jobId);
 		}
+	}
+
+	private void updateEmployeeDataUponClockOut(int employeeId, int jobId) {
+		clockRepository.clockOut(
+				employeeId,
+				jobId,
+				clockLogic.getEndTime(),
+				clockLogic.getShiftTime(),
+				clockLogic.getUpdatedWeekTime(),
+				clockLogic.getUpdatedWeekTimeInHours(),
+				clockLogic.getWeeklyPay()
+		);
+	}
+
+	private void handleClockOutWithoutJobId(int employeeId) {
+	    initializeClockLogicForEmployee(employeeId);
+	    updateEmployeeDataUponClockOutWithoutUsingJobId(employeeId);
+	    updateHistory(employeeId);
+    }
+
+    private void clockOutIfClockedInWithoutJobId(int employeeId) {
+	    if (findClockedInById(employeeId)) {
+	        handleClockOutWithoutJobId(employeeId);
+        }
+    }
+
+	private void updateEmployeeDataUponClockOutWithoutUsingJobId(int employeeId) {
+		clockRepository.updateClock(
+				employeeId,
+                clockLogic.getEndTime(),
+                clockLogic.getShiftTime(),
+                clockLogic.getUpdatedWeekTime(),
+                clockLogic.getUpdatedWeekTimeInHours(),
+                clockLogic.getWeeklyPay()
+		);
+	}
+
+	private void initializeClockLogicForEmployee(int employeeId) {
+		clockLogic.initializeClockLogic(
+				findLastRefreshTimeById(employeeId),
+				newEndTime(),
+				findCurrentWeekTimeById(employeeId),
+				findPayRateById(employeeId)
+		);
+	}
+
+	private Date newEndTime() {
+		return new Date();
+	}
+
+	private void updateLaborCost(int jobId) {
+		jobsService.updateLaborCost(jobId, clockLogic.getShiftPay());
+	}
+
+	private void updateHistory(int employeeId) {
+		historyService.saveHistory(
+				employeeId,
+				clockLogic.getStartTime(),
+				clockLogic.getEndTime(),
+				clockLogic.getShiftTime()
+		);
+	}
+
+	private void updateEmployeeDataUponRefresh(int employeeId, int jobId) {
+		clockRepository.refreshClockWithJobId(
+				employeeId,
+				jobId,
+				new Date(),
+				clockLogic.getShiftTime(),
+				clockLogic.getUpdatedWeekTime(),
+				clockLogic.getUpdatedWeekTimeInHours(),
+				clockLogic.getWeeklyPay()
+		);
+	}
+
+	private void handleRefresh(int employeeId, int jobId) {
+		initializeClockLogicForEmployee(employeeId);
+		updateEmployeeDataUponRefresh(employeeId, jobId);
+		updateLaborCost(jobId);
+		updateHistory(employeeId);
 	}
 
 	/*
 	* Refresh with Job ID... Adds labor cost upon refresh
 	*/
 	public void refreshClockAndAddLabor(int id) {
-		if (this.findClockedById(id)) {
-			Date d = new Date();
-			Date startTime = clockRepository.findStartTimeById(id);
-			Date lastRefreshTime = clockRepository.findLastRefreshById(id);
-			if (lastRefreshTime.after(startTime)) {
-				cl.calcShiftTime(lastRefreshTime, d);
-			} else {
-				cl.calcShiftTime(startTime, d);
-			}
-			int jobId = findClockedInAtById(id);
-			double shiftPay = cl.calculatePay(cl.longToDoubleInHours(cl.getShiftTime()), clockRepository.findPayRateById(id));
-			cl.calcWeeklyTime(clockRepository.findWeekTimeById(id), cl.getShiftTime());
-			double weeklyPay = cl.calculatePay(cl.longToDoubleInHours(cl.getWeeklyTime()), clockRepository.findPayRateById(id));
-			clockRepository.refreshClockWithJobId(id, cl.getShiftTime(), cl.getWeeklyTime(), jobId, cl.timeToHours(cl.getWeeklyTime()), weeklyPay, d);
-			jobsService.updateLaborCost(jobId, shiftPay);
-			historyService.saveHistory(id, startTime, d, cl.getShiftTime());
-		}
-	}
-
-	/*
-	* Refresh without job id for mobile/rest
-	*/
-	public void refreshClock(int id) {
-		if (this.findClockedById(id)) {
-			Date d = new Date();
-			Date lastRefreshTime = clockRepository.findLastRefreshById(id);
-			long currentWeek = clockRepository.findWeekTimeById(id);
-			cl.setWeeklyTime(currentWeek);
-			double payRate = clockRepository.findPayRateById(id);
-			double exactWeeklyTime = cl.longToDoubleInHours(cl.getWeeklyTime());
-			double weeklyHours = cl.timeToHours(cl.getWeeklyTime());
-			double weeklyPay = cl.calculatePay(exactWeeklyTime, payRate);
-			cl.calcShiftTime(lastRefreshTime, d);
-			cl.calcWeeklyTime(currentWeek, cl.getShiftTime());
-			clockRepository.refreshClock(id, cl.getShiftTime(), cl.getWeeklyTime(), weeklyHours, weeklyPay, d);
+		if (findClockedInById(id)) {
+			handleRefresh(id, findClockedInAtById(id));
 		}
 	}
 
@@ -186,13 +208,22 @@ public class ClockService {
 		return allEmployees;
 	}
 
-	/*
-	* Delete user by id
-	*/
+
 	public void deleteById(int id) {
 		clockRepository.delete(findUserById(id));
 	}
 
+	private Date findLastRefreshTimeById(int id) {
+		return clockRepository.findLastRefreshById(id);
+	}
+
+	private long findCurrentWeekTimeById(int id) {
+		return clockRepository.findWeekTimeById(id);
+	}
+
+	private double findPayRateById(int id) {
+		return clockRepository.findPayRateById(id);
+	}
 
 	public void resetPayPeriod(int bizId) {
 		clockRepository.resetClock(bizId);
@@ -202,7 +233,7 @@ public class ClockService {
 		return clockRepository.findByBizId(bizId);
 	}
 	
-	public Boolean findClockedById(int id) {
+	public Boolean findClockedInById(int id) {
 		return clockRepository.findClockedById(id);
 	}
 	
@@ -213,16 +244,8 @@ public class ClockService {
 	public Clock findUserById(int id) {
 		return clockRepository.findUserById(id);
 	}
-	
-	public Clock findByUser(String user) {
-		return clockRepository.findByUser(user);
-	}
-	
-	public Clock findByClocked(Boolean clocked) {
-		return clockRepository.findByClocked(clocked);
-	}
 
-	public int findClockedInAtById(int id) {
+	private int findClockedInAtById(int id) {
 		return clockRepository.findClockedInAtById(id);
 	}
 	

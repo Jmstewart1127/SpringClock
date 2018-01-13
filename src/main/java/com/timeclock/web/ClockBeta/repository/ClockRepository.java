@@ -104,12 +104,12 @@ public interface ClockRepository extends CrudRepository <Clock, Long> {
 			+ "last_refresh=:lastRefresh, clocked=true WHERE id=:id")
 	void refreshClockWithJobId(
 			@Param("id")int id,
+			@Param("clockedInAt")int clockedInAt,
+			@Param("lastRefresh")Date lastRefresh,
 			@Param("shiftTime")long shiftTime,
 			@Param("weeklyTime")long weeklyTime,
-			@Param("clockedInAt")int clockedInAt,
 			@Param("weeklyTimeInHours")double weeklyTimeInHours,
-			@Param("totalPay")double totalPay,
-			@Param("lastRefresh")Date lastRefresh);
+			@Param("totalPay")double totalPay);
 
 	@Modifying
 	@Transactional

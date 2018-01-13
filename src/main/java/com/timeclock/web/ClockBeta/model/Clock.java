@@ -39,7 +39,6 @@ public class Clock {
 	@Column(name = "last_refresh")
 	private Date lastRefresh;
 
-
 	public Clock() {
 		super();
 	}

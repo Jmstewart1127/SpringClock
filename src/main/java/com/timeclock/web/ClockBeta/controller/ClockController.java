@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.timeclock.web.ClockBeta.model.Clock;
 import com.timeclock.web.ClockBeta.service.ClockService;
@@ -101,7 +100,7 @@ public class ClockController {
 	public ModelAndView processClockForm(ModelAndView modelAndView, @Valid Clock clock) {
 		modelAndView.setViewName("timeclockupdate");
 		int userId = clock.getId();
-		Boolean isClocked = clockService.findClockedById(userId);
+		Boolean isClocked = clockService.findClockedInById(userId);
 		
 		if (isClocked) {
 			clockService.clockOut(userId);
@@ -119,7 +118,7 @@ public class ClockController {
 			@Valid Clock clock, Business business,
 			@PathVariable int id) {
 
-		Boolean isClocked = clockService.findClockedById(id);
+		Boolean isClocked = clockService.findClockedInById(id);
 
 		if (isClocked) {
 			clockService.clockOut(id);

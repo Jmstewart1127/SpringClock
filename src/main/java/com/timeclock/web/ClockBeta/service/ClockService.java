@@ -42,36 +42,26 @@ public class ClockService {
 		}
 	}
 
-	/*
-	* Original Clock In Without Job ID
-	*/
 	public void clockIn(int id) {
 		if (!this.findClockedInById(id)) {
-			Date d = new Date();
-			clockRepository.updateClock(id, d, d);
+			clockRepository.updateClock(id, new Date(), new Date());
 		}
 	}
 
-	/*
-	* Original Clock Out Without Job ID
-	*/
 	public void clockOut(int id) {
         clockOutIfClockedInWithoutJobId(id);
 	}
 
-	/*
-	* Clock In With Job ID
-	*/
 	public void clockInAtJob(int id, int jobId) {
-		if (!this.findClockedInById(id)) {
-			Date d = new Date();
-			clockRepository.clockIn(id, jobId, d, d);
-		}
+        clockInIfClockedOut(id, jobId);
 	}
 
-	/*
-	* Clock Out With Job ID
-	*/
+	private void clockInIfClockedOut(int employeeId, int jobId) {
+        if (!this.findClockedInById(employeeId)) {
+            clockRepository.clockIn(employeeId, jobId, new Date(), new Date());
+        }
+    }
+
 	public void clockOutFromJob(int id, int jobId) {
 		clockOutIfClockedIn(id, jobId);
 	}
@@ -169,18 +159,12 @@ public class ClockService {
 		updateHistory(employeeId);
 	}
 
-	/*
-	* Refresh with Job ID... Adds labor cost upon refresh
-	*/
 	public void refreshClockAndAddLabor(int id) {
 		if (findClockedInById(id)) {
 			handleRefresh(id, findClockedInAtById(id));
 		}
 	}
 
-	/*
-	* Finds all employees by logged in user for web application
-	*/
 	public Iterable<Clock> findAllEmployeesByAdmin(Authentication auth) {
 		Iterable<Business> usersBusinesses = businessService.findByCurrentUserId(auth);
 		ArrayList<Clock> allEmployees = new ArrayList<Clock>();
@@ -193,9 +177,6 @@ public class ClockService {
 		return allEmployees;
 	}
 
-	/*
-	* Finds all employees by user id for rest controller
-	*/
 	public Iterable<Clock> findAllEmployeesByAdminId(int id) {
 		Iterable<Business> usersBusinesses = businessService.findBusinessesByUserId(id);
 		ArrayList<Clock> allEmployees = new ArrayList<Clock>();
@@ -207,7 +188,6 @@ public class ClockService {
 		}
 		return allEmployees;
 	}
-
 
 	public void deleteById(int id) {
 		clockRepository.delete(findUserById(id));

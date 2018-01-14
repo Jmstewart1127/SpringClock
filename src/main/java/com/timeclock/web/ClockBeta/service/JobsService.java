@@ -103,7 +103,6 @@ public class JobsService {
 		double newAmountDue = pl.getBalanceDue();
 		updateAmountDueById(id, totalAmountPaid, newAmountDue);
 		checkIfPaid(id, totalAmountPaid);
-		System.out.println(totalAmountPaid);
 	}
 	
 	public Jobs saveJobs(Jobs jobs) {

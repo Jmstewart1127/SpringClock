@@ -23,7 +23,8 @@ public class HistoryService {
 			Date startTime,
 			Date endTime,
 			long shiftTime
-			) {
+			)
+	{
 		History h = new History();
 		h.setUserId(userId);
 		h.setClockIn(startTime);

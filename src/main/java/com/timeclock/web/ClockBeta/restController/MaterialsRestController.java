@@ -15,18 +15,14 @@ public class MaterialsRestController {
     @Autowired
     MaterialService materialService;
 
-    /*
-    * Gets materials by jobId
-    */
+
     @CrossOrigin(origins = {"http://localhost:3000", "https://spring-clock-ui.herokuapp.com"})
     @RequestMapping("/rest/jobs/{jobId}/material")
-    public Iterable<Material> getMaterials(@PathVariable int jobId) {
+    public Iterable<Material> getMaterialsByJobId(@PathVariable int jobId) {
         return materialService.findByJobId(jobId);
     }
 
-    /*
-    * Gets total cost of materials for job
-    */
+
     @CrossOrigin(origins = {"http://localhost:3000", "https://spring-clock-ui.herokuapp.com"})
     @RequestMapping("/rest/jobs/{jobId}/total/cost")
     public double getTotalCostOfAllMaterialsForJob(@PathVariable int jobId) {

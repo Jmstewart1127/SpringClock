@@ -14,18 +14,14 @@ public class JobsRestController {
     @Autowired
     JobsService jobsService;
 
-    /*
-    *  Gets all job addresses by business ID
-    */
+
     @CrossOrigin(origins = {"http://localhost:3000", "https://spring-clock-ui.herokuapp.com"})
     @RequestMapping("/rest/jobs/address/{bizId}")
     public Iterable<Jobs> showJobAddressByBizId(@PathVariable int bizId) {
         return jobsService.findAddressByBizId(bizId);
     }
 
-    /*
-    * Gets all jobs by buisness ID
-    */
+
     @CrossOrigin(origins = {"http://localhost:3000", "https://spring-clock-ui.herokuapp.com"})
     @RequestMapping("/rest/jobs/all/{bizId}")
     public Iterable<Jobs> showJobsByBizId(@PathVariable int bizId) {

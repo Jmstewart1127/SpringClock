@@ -37,7 +37,7 @@ public class ClockRestController {
 
 
 	@CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
-	@RequestMapping(value="/rest/web/clock/in/{id}")
+	@RequestMapping(value="/rest/web/clock/in/out/{id}")
 	public void handleClockInAndOut(@PathVariable int id) {
 		clockService.handleClockInOut(id);
 	}

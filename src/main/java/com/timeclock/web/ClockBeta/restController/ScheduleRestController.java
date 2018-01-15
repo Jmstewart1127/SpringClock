@@ -17,28 +17,28 @@ public class ScheduleRestController {
     ScheduleService scheduleService;
 
 
-    @CrossOrigin(origins = {"http://localhost:3000", "https://spring-clock-ui.herokuapp.com"})
+    @CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
     @RequestMapping("/rest/jobs/employee/schedule/{clockId}")
     public Iterable<Schedule> showJobsAssignedToEmployeeById(@PathVariable int clockId) {
         return scheduleService.getScheduleByClockId(clockId);
     }
 
 
-    @CrossOrigin(origins = {"http://localhost:3000", "https://spring-clock-ui.herokuapp.com"})
+    @CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
     @RequestMapping("/rest/jobs/assigned/employee/{clockId}")
     public Iterable<Jobs> showJobAddressesAssignedToEmployee(@PathVariable int clockId) {
         return scheduleService.findJobsAssignedToEmployee(clockId);
     }
 
 
-    @CrossOrigin(origins = {"http://localhost:3000", "https://spring-clock-ui.herokuapp.com"})
+    @CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
     @RequestMapping("/rest/jobs/employee/schedule/jobs/{clockId}")
     public Iterable<Integer> showJobIdsByEmployeeId(@PathVariable int clockId) {
         return scheduleService.getJobIdsByClockId(clockId);
     }
 
 
-    @CrossOrigin(origins = {"http://localhost:3000", "https://spring-clock-ui.herokuapp.com"})
+    @CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
     @RequestMapping("/rest/jobs/assigned/employees/{jobId}")
     public Iterable<Clock> showAllEmployeesAssignedToJob(@PathVariable int jobId) {
         return scheduleService.findAllEmployeesOnJob(jobId);

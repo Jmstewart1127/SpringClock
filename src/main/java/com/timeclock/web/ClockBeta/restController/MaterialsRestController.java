@@ -16,14 +16,14 @@ public class MaterialsRestController {
     MaterialService materialService;
 
 
-    @CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/jobs/{jobId}/material")
     public Iterable<Material> getMaterialsByJobId(@PathVariable int jobId) {
         return materialService.findByJobId(jobId);
     }
 
 
-    @CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/jobs/{jobId}/total/cost")
     public double getTotalCostOfAllMaterialsForJob(@PathVariable int jobId) {
         return materialService.totalPriceOfAllJobMaterials(jobId);

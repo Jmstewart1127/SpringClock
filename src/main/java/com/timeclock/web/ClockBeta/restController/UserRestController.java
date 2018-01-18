@@ -15,7 +15,7 @@ public class UserRestController {
     UserService userService;
     
 
-    @CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping(value="/rest/login/{username}/{password}")
     public User loginByRetrievingUserId(@PathVariable String username, @PathVariable String password) {
         return userService.findIdByCredentials(username, password);

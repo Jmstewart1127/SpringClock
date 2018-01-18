@@ -15,13 +15,13 @@ public class BusinessRestController {
     @Autowired
     BusinessService businessService;
 
-    @CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping(value = "/rest/user/{id}/businesses")
     public Iterable<Business> getBusinessesByUserId(@PathVariable int id) {
         return businessService.findBusinessesByUserId(id);
     }
 
-    @CrossOrigin(origins = {"http://localhost:4200", "https://spring-clock-ui.herokuapp.com"})
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping(value = "/rest/user/businesses")
     public Iterable<Business> getBusinessesByCurrentLogin(Authentication auth) {
         System.out.println(":: " + businessService.findByCurrentUserId(auth));

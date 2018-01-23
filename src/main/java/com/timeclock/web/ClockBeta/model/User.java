@@ -8,10 +8,10 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-	
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "password")
@@ -20,50 +20,50 @@ public class User {
     private String role;
     @Column(name = "enabled")
     private boolean enabled = false;
-    
-	public User() {
-		super();
-	}
 
-	public int getId() {
-		return id;
-	}
+    public User() {
+        super();
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-	
-	
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+
 }

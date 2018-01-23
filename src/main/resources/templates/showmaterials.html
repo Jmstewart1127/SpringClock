@@ -37,7 +37,7 @@
             <h3 th:text="${'Total Material Cost: $' + totalCost}"></h3>
         </div>
     </div>
-    <div> <a class="button" th:href="@{/hello/jobs/{id}/materials/update(id=${jobs.id})}">Add More Materials</a></div>
+    <div><a class="button" th:href="@{/hello/jobs/{id}/materials/update(id=${jobs.id})}">Add More Materials</a></div>
 </div>
 <div th:include="scripts :: scripts"></div>
 </body>

@@ -12,5 +12,5 @@ import com.timeclock.web.ClockBeta.model.UserRole;
 
 public interface UserRoleRepository extends CrudRepository<UserRole, Long> {
 
-	
+
 }

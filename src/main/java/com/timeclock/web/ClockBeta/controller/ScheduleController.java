@@ -32,13 +32,13 @@ public class ScheduleController {
     @Autowired
     ClockService clockService;
 
-    @RequestMapping(value="/hello/jobs/{id}/add/employees", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello/jobs/{id}/add/employees", method = RequestMethod.GET)
     public ModelAndView showUpdateJobsPage(
-            ModelAndView modelAndView,
-            Authentication auth,
-            @Valid Jobs jobs,
-            @Valid Clock clock,
-            @Valid Schedule schedule) {
+        ModelAndView modelAndView,
+        Authentication auth,
+        @Valid Jobs jobs,
+        @Valid Clock clock,
+        @Valid Schedule schedule) {
         modelAndView.addObject("jobs", jobs);
         modelAndView.addObject("clock", clockService.findAllEmployeesByAdmin(auth));
         modelAndView.addObject("schedule", schedule);
@@ -46,14 +46,14 @@ public class ScheduleController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/hello/jobs/{id}/add/employees",method=RequestMethod.POST)
+    @RequestMapping(value = "/hello/jobs/{id}/add/employees", method = RequestMethod.POST)
     public ModelAndView processJobEditForm(
-            ModelAndView modelAndView,
-            @PathVariable int id,
-            @RequestParam List<Integer> clockIds,
-            @Valid Jobs jobs,
-            BindingResult bindingResult,
-            HttpServletRequest request) {
+        ModelAndView modelAndView,
+        @PathVariable int id,
+        @RequestParam List<Integer> clockIds,
+        @Valid Jobs jobs,
+        BindingResult bindingResult,
+        HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("updatejobstatus");

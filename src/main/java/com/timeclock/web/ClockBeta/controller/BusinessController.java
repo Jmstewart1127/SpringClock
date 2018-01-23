@@ -26,55 +26,55 @@ import com.timeclock.web.ClockBeta.service.UserService;
 @SessionAttributes("adminName")
 public class BusinessController {
 
-	
-	@Autowired
-	BusinessService businessService;
-	
-	@Autowired
-	JobsService jobsService;
-	
-	@Autowired
-	UserAuthDetails userAuthDetails;
-	
-	/*
-	 * Shows new business form
-	 */
-	@RequestMapping(value="/hello/newbusiness", method = RequestMethod.GET)
-	public ModelAndView newBiz(ModelAndView modelAndView, Business business, Jobs jobs) {
-	    modelAndView.addObject(business);
-	    modelAndView.addObject(jobs);
-		modelAndView.setViewName("register");
-		return modelAndView;
-	}
-	
-	/*
-	 * Adds business 
-	 */
-	@RequestMapping(value="/hello/newbusiness", method = RequestMethod.POST)
-	public ModelAndView addNewBusiness(ModelAndView modelAndView, @Valid Business business, @Valid Jobs jobs,
-		BindingResult bindingResult, HttpServletRequest request, Authentication auth) {
-		modelAndView.setViewName("showbusinesses");
-		modelAndView.addObject(business);
-		business.setAdminId(userAuthDetails.getUserId(auth));
-		business.setAdminName(userAuthDetails.getUserName(auth));
-		businessService.saveBusiness(business);
-		Jobs j = new Jobs();
-		j.setBizId(business.getId());
-		j.setJobAddress(jobs.getJobAddress());
-		jobsService.saveJobs(j);
-		return modelAndView;
-	}
 
-	/*
-	 * Shows list of businesses
-	 */
-    @RequestMapping(value="/hello/business", method = RequestMethod.GET)
+    @Autowired
+    BusinessService businessService;
+
+    @Autowired
+    JobsService jobsService;
+
+    @Autowired
+    UserAuthDetails userAuthDetails;
+
+    /*
+     * Shows new business form
+     */
+    @RequestMapping(value = "/hello/newbusiness", method = RequestMethod.GET)
+    public ModelAndView newBiz(ModelAndView modelAndView, Business business, Jobs jobs) {
+        modelAndView.addObject(business);
+        modelAndView.addObject(jobs);
+        modelAndView.setViewName("register");
+        return modelAndView;
+    }
+
+    /*
+     * Adds business
+     */
+    @RequestMapping(value = "/hello/newbusiness", method = RequestMethod.POST)
+    public ModelAndView addNewBusiness(ModelAndView modelAndView, @Valid Business business, @Valid Jobs jobs,
+                                       BindingResult bindingResult, HttpServletRequest request, Authentication auth) {
+        modelAndView.setViewName("showbusinesses");
+        modelAndView.addObject(business);
+        business.setAdminId(userAuthDetails.getUserId(auth));
+        business.setAdminName(userAuthDetails.getUserName(auth));
+        businessService.saveBusiness(business);
+        Jobs j = new Jobs();
+        j.setBizId(business.getId());
+        j.setJobAddress(jobs.getJobAddress());
+        jobsService.saveJobs(j);
+        return modelAndView;
+    }
+
+    /*
+     * Shows list of businesses
+     */
+    @RequestMapping(value = "/hello/business", method = RequestMethod.GET)
     public ModelAndView showBusinesses(ModelAndView modelAndView, Business business, Authentication auth) {
         modelAndView.setViewName("showbusinesses");
         modelAndView.addObject("business", businessService.findByCurrentUserId(auth));
         return modelAndView;
     }
-	
+
 }
-	
+
 

@@ -10,102 +10,102 @@ import javax.persistence.Id;
 
 @Entity
 public class History {
-	
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	@Column(name = "user_id")
-	private int userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column(name = "user_id")
+    private int userId;
     @Column(name = "biz_id")
     private int bizId;
     @Column(name = "user")
-	private String user;
+    private String user;
     @Column(name = "clock_in")
-	private Date clockIn;
+    private Date clockIn;
     @Column(name = "clock_out")
-	private Date clockOut;
+    private Date clockOut;
     @Column(name = "shift_time")
-	private long shiftTime; 
+    private long shiftTime;
     @Column(name = "week_time")
-	private long weekTime;
+    private long weekTime;
     @Column(name = "is_clocked")
     private Boolean clocked;
-	
+
     public History() {
-    	super();
+        super();
     }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public int getUserId() {
-		return userId;
-	}
+    public int getUserId() {
+        return userId;
+    }
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-	public int getBizId() {
-		return bizId;
-	}
+    public int getBizId() {
+        return bizId;
+    }
 
-	public void setBizId(int bizId) {
-		this.bizId = bizId;
-	}
+    public void setBizId(int bizId) {
+        this.bizId = bizId;
+    }
 
-	public String getUser() {
-		return user;
-	}
+    public String getUser() {
+        return user;
+    }
 
-	public void setUser(String user) {
-		this.user = user;
-	}
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-	public Date getClockIn() {
-		return clockIn;
-	}
+    public Date getClockIn() {
+        return clockIn;
+    }
 
-	public void setClockIn(Date clockIn) {
-		this.clockIn = clockIn;
-	}
+    public void setClockIn(Date clockIn) {
+        this.clockIn = clockIn;
+    }
 
-	public Date getClockOut() {
-		return clockOut;
-	}
+    public Date getClockOut() {
+        return clockOut;
+    }
 
-	public void setClockOut(Date clockOut) {
-		this.clockOut = clockOut;
-	}
+    public void setClockOut(Date clockOut) {
+        this.clockOut = clockOut;
+    }
 
-	public long getShiftTime() {
-		return shiftTime;
-	}
+    public long getShiftTime() {
+        return shiftTime;
+    }
 
-	public void setShiftTime(long shiftTime) {
-		this.shiftTime = shiftTime;
-	}
+    public void setShiftTime(long shiftTime) {
+        this.shiftTime = shiftTime;
+    }
 
-	public long getWeekTime() {
-		return weekTime;
-	}
+    public long getWeekTime() {
+        return weekTime;
+    }
 
-	public void setWeekTime(long weekTime) {
-		this.weekTime = weekTime;
-	}
+    public void setWeekTime(long weekTime) {
+        this.weekTime = weekTime;
+    }
 
-	public Boolean getClocked() {
-		return clocked;
-	}
+    public Boolean getClocked() {
+        return clocked;
+    }
 
-	public void setClocked(Boolean clocked) {
-		this.clocked = clocked;
-	}
-    
-    
+    public void setClocked(Boolean clocked) {
+        this.clocked = clocked;
+    }
+
+
 }

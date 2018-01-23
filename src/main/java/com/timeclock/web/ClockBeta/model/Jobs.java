@@ -11,10 +11,10 @@ import java.time.LocalDate;
 public class Jobs {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	@Column(name = "biz_id")
-	private int bizId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column(name = "biz_id")
+    private int bizId;
     @Column(name = "job_name")
     private String jobName;
     @Column(name = "job_address")
@@ -32,117 +32,117 @@ public class Jobs {
     @Column(name = "is_paid")
     private Boolean isPaid = false;
     @Column(name = "material_cost")
-	private double materialCost;
+    private double materialCost;
     @Column(name = "labor_cost")
-	private double laborCost;
-	@Column(name = "completion_date")
-	private LocalDate completionDate;
-	
+    private double laborCost;
+    @Column(name = "completion_date")
+    private LocalDate completionDate;
+
     public Jobs() {
-		super();
-	}
+        super();
+    }
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public int getBizId() {
-		return bizId;
-	}
+    public int getBizId() {
+        return bizId;
+    }
 
-	public void setBizId(int bizId) {
-		this.bizId = bizId;
-	}
+    public void setBizId(int bizId) {
+        this.bizId = bizId;
+    }
 
-	public String getJobName() {
-		return jobName;
-	}
+    public String getJobName() {
+        return jobName;
+    }
 
-	public void setJobName(String jobName) {
-		this.jobName = jobName;
-	}
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
 
-	public String getJobAddress() {
-		return jobAddress;
-	}
+    public String getJobAddress() {
+        return jobAddress;
+    }
 
-	public void setJobAddress(String jobAddress) {
-		this.jobAddress = jobAddress;
-	}
+    public void setJobAddress(String jobAddress) {
+        this.jobAddress = jobAddress;
+    }
 
-	public String getCategory() {
-		return category;
-	}
+    public String getCategory() {
+        return category;
+    }
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-	public String getCustomerName() {
-		return customerName;
-	}
+    public String getCustomerName() {
+        return customerName;
+    }
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-	
-	public double getAmountCharged() {
-		return amountCharged;
-	}
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
-	public void setAmountCharged(double amountCharged) {
-		this.amountCharged = amountCharged;
-	}
+    public double getAmountCharged() {
+        return amountCharged;
+    }
 
-	public double getAmountDue() {
-		return amountDue;
-	}
+    public void setAmountCharged(double amountCharged) {
+        this.amountCharged = amountCharged;
+    }
 
-	public void setAmountDue(double amountDue) {
-		this.amountDue = amountDue;
-	}
+    public double getAmountDue() {
+        return amountDue;
+    }
 
-	public double getAmountPaid() {
-		return amountPaid;
-	}
+    public void setAmountDue(double amountDue) {
+        this.amountDue = amountDue;
+    }
 
-	public void setAmountPaid(double amountPaid) {
-		this.amountPaid = amountPaid;
-	}
+    public double getAmountPaid() {
+        return amountPaid;
+    }
 
-	public Boolean getIsPaid() {
-		return isPaid;
-	}
+    public void setAmountPaid(double amountPaid) {
+        this.amountPaid = amountPaid;
+    }
 
-	public void setIsPaid(Boolean isPaid) {
-		this.isPaid = isPaid;
-	}
+    public Boolean getIsPaid() {
+        return isPaid;
+    }
 
-	public double getMaterialCost() {
-		return materialCost;
-	}
+    public void setIsPaid(Boolean isPaid) {
+        this.isPaid = isPaid;
+    }
 
-	public void setMaterialCost(double materialCost) {
-		this.materialCost = materialCost;
-	}
+    public double getMaterialCost() {
+        return materialCost;
+    }
 
-	public double getLaborCost() {
-		return laborCost;
-	}
+    public void setMaterialCost(double materialCost) {
+        this.materialCost = materialCost;
+    }
 
-	public void setLaborCost(double laborCost) {
-		this.laborCost = laborCost;
-	}
+    public double getLaborCost() {
+        return laborCost;
+    }
 
-	public LocalDate getCompletionDate() {
-		return completionDate;
-	}
+    public void setLaborCost(double laborCost) {
+        this.laborCost = laborCost;
+    }
 
-	public void setCompletionDate(LocalDate completionDate) {
-		this.completionDate = completionDate;
-	}
+    public LocalDate getCompletionDate() {
+        return completionDate;
+    }
+
+    public void setCompletionDate(LocalDate completionDate) {
+        this.completionDate = completionDate;
+    }
 }

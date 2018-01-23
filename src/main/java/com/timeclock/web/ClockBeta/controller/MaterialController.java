@@ -24,25 +24,25 @@ public class MaterialController {
     @Autowired
     JobsService jobsService;
 
-    @RequestMapping(value="/hello/jobs/materials/", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello/jobs/materials/", method = RequestMethod.GET)
     public ModelAndView showMaterialsPage(ModelAndView modelAndView, Material material) {
         modelAndView.addObject("material", material);
         modelAndView.setViewName("showmaterials");
         return modelAndView;
     }
 
-    @RequestMapping(value="/hello/jobs/materials/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello/jobs/materials/update", method = RequestMethod.GET)
     public ModelAndView showUpdateMaterialsPage(ModelAndView modelAndView, Material material) {
         modelAndView.addObject("material", material);
         modelAndView.setViewName("addmaterial");
         return modelAndView;
     }
 
-    @RequestMapping(value="/hello/jobs/materials/update",method=RequestMethod.POST)
+    @RequestMapping(value = "/hello/jobs/materials/update", method = RequestMethod.POST)
     public ModelAndView processMaterialsForm(
-            ModelAndView modelAndView,
-            @Valid Material material,
-            BindingResult bindingResult) {
+        ModelAndView modelAndView,
+        @Valid Material material,
+        BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("addmaterial");
@@ -55,14 +55,14 @@ public class MaterialController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/hello/jobs/{id}/materials/", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello/jobs/{id}/materials/", method = RequestMethod.GET)
     public ModelAndView showMaterialsPage(ModelAndView modelAndView, @PathVariable int id) {
         modelAndView.addObject("material", materialService.findByJobId(id));
         modelAndView.setViewName("showmaterials");
         return modelAndView;
     }
 
-    @RequestMapping(value="/hello/jobs/{id}/materials/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello/jobs/{id}/materials/update", method = RequestMethod.GET)
     public ModelAndView showUpdateMaterialsPageForJob(ModelAndView modelAndView, Material material, Jobs jobs) {
         modelAndView.addObject("material", material);
         modelAndView.addObject("jobs", jobs);
@@ -70,12 +70,12 @@ public class MaterialController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/hello/jobs/{id}/materials/update",method=RequestMethod.POST)
+    @RequestMapping(value = "/hello/jobs/{id}/materials/update", method = RequestMethod.POST)
     public ModelAndView processJobMaterialsForm(
-            ModelAndView modelAndView,
-            @PathVariable int id,
-            BindingResult bindingResult,
-            Material material) {
+        ModelAndView modelAndView,
+        @PathVariable int id,
+        BindingResult bindingResult,
+        Material material) {
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("addmaterial");

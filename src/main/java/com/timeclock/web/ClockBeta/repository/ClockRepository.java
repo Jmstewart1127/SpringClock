@@ -10,131 +10,131 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.timeclock.web.ClockBeta.model.Clock;
 
-public interface ClockRepository extends CrudRepository <Clock, Long> {
-	
-	Iterable<Clock> findById(int id);
-	
-	Clock findUserById(int id);
-	
-	Clock findByUser(String user);
-	
-	Clock findByClocked(Boolean clocked);
-	
-	Iterable<Clock> findByBizId(int bizId);
+public interface ClockRepository extends CrudRepository<Clock, Long> {
 
-	@Query("SELECT bizId FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
-	int findBizIdById(@Param("id")int id);
+    Iterable<Clock> findById(int id);
 
-	@Query("SELECT clockedInAt FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
-	int findClockedInAtById(@Param("id")int id);
+    Clock findUserById(int id);
 
-	@Query("SELECT clocked FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
-	Boolean findClockedById(@Param("id")int id);
-	
-	@Query("SELECT payRate FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
-	double findPayRateById(@Param("id")int id);
-	
-	@Query("SELECT clockIn FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
-	Date findStartTimeById(@Param("id")int id);
-	
-	@Query("SELECT weekTime FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
-	Long findWeekTimeById(@Param("id")int id);
+    Clock findByUser(String user);
 
-	@Query("SELECT lastRefresh FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
-	Date findLastRefreshById(@Param("id")int id);
-	
-	@Modifying
-	@Transactional
-	@Query("UPDATE com.timeclock.web.ClockBeta.model.Clock "
-			+ "SET clock_in=:startTime, last_refresh=:lastRefresh, clocked=true WHERE id=:id")
-	void updateClock(
-			@Param("id")int id,
-			@Param("startTime")Date startTime,
-			@Param("lastRefresh")Date lastRefresh);
+    Clock findByClocked(Boolean clocked);
 
-	@Modifying
-	@Transactional
-	@Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
-			+ "clock_out=:endTime, shift_time=:shiftTime, week_time=:weeklyTime, "
-			+ "week_time_in_hours=:weeklyTimeInHours, total_pay=:totalPay, clocked=false WHERE id=:id")
-	void updateClock(
-			@Param("id")int id,
-			@Param("endTime")Date endTime,
-			@Param("shiftTime")long shiftTime,
-			@Param("weeklyTime")long weeklyTime,
-			@Param("weeklyTimeInHours")double weeklyTimeInHours,
-			@Param("totalPay")double totalPay);
+    Iterable<Clock> findByBizId(int bizId);
 
-	/*
-	* Clock In With Job ID
-	*/
-	@Modifying
-	@Transactional
-	@Query("UPDATE com.timeclock.web.ClockBeta.model.Clock "
-			+ "SET clock_in=:startTime, clocked_in_at=:clockedInAt, last_refresh=:lastRefresh, " +
-			"clocked=true WHERE id=:id")
-	void clockIn(
-			@Param("id")int id,
-			@Param("clockedInAt")int clockedInAt,
-			@Param("startTime")Date startTime,
-			@Param("lastRefresh")Date lastRefresh);
+    @Query("SELECT bizId FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
+    int findBizIdById(@Param("id") int id);
 
-	/*
-	* Clock Out With Job ID
-	*/
-	@Modifying
-	@Transactional
-	@Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
-			+ "clocked_in_at=:clockedInAt, clock_out=:endTime, shift_time=:shiftTime, week_time=:weeklyTime, "
-			+ "week_time_in_hours=:weeklyTimeInHours, total_pay=:totalPay, clocked=false WHERE id=:id")
-	void clockOut(
-			@Param("id")int id,
-			@Param("clockedInAt")int clockedInAt,
-			@Param("endTime")Date endTime,
-			@Param("shiftTime")long shiftTime,
-			@Param("weeklyTime")long weeklyTime,
-			@Param("weeklyTimeInHours")double weeklyTimeInHours,
-			@Param("totalPay")double totalPay);
+    @Query("SELECT clockedInAt FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
+    int findClockedInAtById(@Param("id") int id);
 
-	@Modifying
-	@Transactional
-	@Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
-			+ "shift_time=:shiftTime, week_time=:weeklyTime, clocked_in_at=:clockedInAt,"
-			+ "week_time_in_hours=:weeklyTimeInHours, total_pay=:totalPay, "
-			+ "last_refresh=:lastRefresh, clocked=true WHERE id=:id")
-	void refreshClockWithJobId(
-			@Param("id")int id,
-			@Param("clockedInAt")int clockedInAt,
-			@Param("lastRefresh")Date lastRefresh,
-			@Param("shiftTime")long shiftTime,
-			@Param("weeklyTime")long weeklyTime,
-			@Param("weeklyTimeInHours")double weeklyTimeInHours,
-			@Param("totalPay")double totalPay);
+    @Query("SELECT clocked FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
+    Boolean findClockedById(@Param("id") int id);
 
-	@Modifying
-	@Transactional
-	@Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
-			+ "shift_time=:shiftTime, week_time=:weeklyTime, "
-			+ "week_time_in_hours=:weeklyTimeInHours, total_pay=:totalPay, "
-			+ "last_refresh=:lastRefresh, clocked=true WHERE id=:id")
-	void refreshClock(
-			@Param("id")int id,
-			@Param("shiftTime")long shiftTime,
-			@Param("weeklyTime")long weeklyTime,
-			@Param("weeklyTimeInHours")double weeklyTimeInHours,
-			@Param("totalPay")double totalPay,
-			@Param("lastRefresh")Date lastRefresh);
+    @Query("SELECT payRate FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
+    double findPayRateById(@Param("id") int id);
 
-	@Modifying
-	@Transactional
-	@Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
-			+ "clock_out=null, clock_in=null, shift_time=0, week_time=0, "
-			+ "week_time_in_hours=0, total_pay=0, clocked=false WHERE bizId=:bizId")
-	void resetClock(@Param("bizId")int bizId);
-	
-	@Modifying
-	@Transactional
-	@Query("DELETE FROM com.timeclock.web.ClockBeta.model.Clock WHERE id=:id")
-	void deleteClock(@Param("id")int id);
-	  
+    @Query("SELECT clockIn FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
+    Date findStartTimeById(@Param("id") int id);
+
+    @Query("SELECT weekTime FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
+    Long findWeekTimeById(@Param("id") int id);
+
+    @Query("SELECT lastRefresh FROM com.timeclock.web.ClockBeta.model.Clock WHERE id= :id")
+    Date findLastRefreshById(@Param("id") int id);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE com.timeclock.web.ClockBeta.model.Clock "
+        + "SET clock_in=:startTime, last_refresh=:lastRefresh, clocked=true WHERE id=:id")
+    void updateClock(
+        @Param("id") int id,
+        @Param("startTime") Date startTime,
+        @Param("lastRefresh") Date lastRefresh);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
+        + "clock_out=:endTime, shift_time=:shiftTime, week_time=:weeklyTime, "
+        + "week_time_in_hours=:weeklyTimeInHours, total_pay=:totalPay, clocked=false WHERE id=:id")
+    void updateClock(
+        @Param("id") int id,
+        @Param("endTime") Date endTime,
+        @Param("shiftTime") long shiftTime,
+        @Param("weeklyTime") long weeklyTime,
+        @Param("weeklyTimeInHours") double weeklyTimeInHours,
+        @Param("totalPay") double totalPay);
+
+    /*
+    * Clock In With Job ID
+    */
+    @Modifying
+    @Transactional
+    @Query("UPDATE com.timeclock.web.ClockBeta.model.Clock "
+        + "SET clock_in=:startTime, clocked_in_at=:clockedInAt, last_refresh=:lastRefresh, " +
+        "clocked=true WHERE id=:id")
+    void clockIn(
+        @Param("id") int id,
+        @Param("clockedInAt") int clockedInAt,
+        @Param("startTime") Date startTime,
+        @Param("lastRefresh") Date lastRefresh);
+
+    /*
+    * Clock Out With Job ID
+    */
+    @Modifying
+    @Transactional
+    @Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
+        + "clocked_in_at=:clockedInAt, clock_out=:endTime, shift_time=:shiftTime, week_time=:weeklyTime, "
+        + "week_time_in_hours=:weeklyTimeInHours, total_pay=:totalPay, clocked=false WHERE id=:id")
+    void clockOut(
+        @Param("id") int id,
+        @Param("clockedInAt") int clockedInAt,
+        @Param("endTime") Date endTime,
+        @Param("shiftTime") long shiftTime,
+        @Param("weeklyTime") long weeklyTime,
+        @Param("weeklyTimeInHours") double weeklyTimeInHours,
+        @Param("totalPay") double totalPay);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
+        + "shift_time=:shiftTime, week_time=:weeklyTime, clocked_in_at=:clockedInAt,"
+        + "week_time_in_hours=:weeklyTimeInHours, total_pay=:totalPay, "
+        + "last_refresh=:lastRefresh, clocked=true WHERE id=:id")
+    void refreshClockWithJobId(
+        @Param("id") int id,
+        @Param("clockedInAt") int clockedInAt,
+        @Param("lastRefresh") Date lastRefresh,
+        @Param("shiftTime") long shiftTime,
+        @Param("weeklyTime") long weeklyTime,
+        @Param("weeklyTimeInHours") double weeklyTimeInHours,
+        @Param("totalPay") double totalPay);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
+        + "shift_time=:shiftTime, week_time=:weeklyTime, "
+        + "week_time_in_hours=:weeklyTimeInHours, total_pay=:totalPay, "
+        + "last_refresh=:lastRefresh, clocked=true WHERE id=:id")
+    void refreshClock(
+        @Param("id") int id,
+        @Param("shiftTime") long shiftTime,
+        @Param("weeklyTime") long weeklyTime,
+        @Param("weeklyTimeInHours") double weeklyTimeInHours,
+        @Param("totalPay") double totalPay,
+        @Param("lastRefresh") Date lastRefresh);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE com.timeclock.web.ClockBeta.model.Clock SET "
+        + "clock_out=null, clock_in=null, shift_time=0, week_time=0, "
+        + "week_time_in_hours=0, total_pay=0, clocked=false WHERE bizId=:bizId")
+    void resetClock(@Param("bizId") int bizId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM com.timeclock.web.ClockBeta.model.Clock WHERE id=:id")
+    void deleteClock(@Param("id") int id);
+
 }

@@ -11,25 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.timeclock.web.ClockBeta.model.History;
 
-public interface HistoryRepository extends CrudRepository <History, Long> {
+public interface HistoryRepository extends CrudRepository<History, Long> {
 
-	Iterable<History> findByUserId(int id);
+    Iterable<History> findByUserId(int id);
 
-	@Modifying
-	@Transactional
-	@Query("UPDATE com.timeclock.web.ClockBeta.model.History SET clock_in=:startTime, clocked=true WHERE id=:id")
-	void updateClock(@Param("id")int id, 
-			  @Param("startTime")Date startTime); 
+    @Modifying
+    @Transactional
+    @Query("UPDATE com.timeclock.web.ClockBeta.model.History SET clock_in=:startTime, clocked=true WHERE id=:id")
+    void updateClock(@Param("id") int id,
+                     @Param("startTime") Date startTime);
 
-	@Modifying
-	@Transactional
-	@Query("UPDATE com.timeclock.web.ClockBeta.model.History SET clock_in=:startTime, clock_out=:endTime, " +
-			"shift_time=:shiftTime, week_time=:weeklyTime, clocked=false WHERE userId=:userId")
-	void updateClock(@Param("userId")int userId,
-			  @Param("startTime")Date startTime,
-			  @Param("endTime")Date endTime, 
-			  @Param("shiftTime")long shiftTime, 
-			  @Param("weeklyTime")long weeklyTime);
+    @Modifying
+    @Transactional
+    @Query("UPDATE com.timeclock.web.ClockBeta.model.History SET clock_in=:startTime, clock_out=:endTime, " +
+        "shift_time=:shiftTime, week_time=:weeklyTime, clocked=false WHERE userId=:userId")
+    void updateClock(@Param("userId") int userId,
+                     @Param("startTime") Date startTime,
+                     @Param("endTime") Date endTime,
+                     @Param("shiftTime") long shiftTime,
+                     @Param("weeklyTime") long weeklyTime);
 
-	
+
 }

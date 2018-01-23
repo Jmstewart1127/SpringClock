@@ -21,38 +21,22 @@ public class ScheduleService {
     @Autowired
     JobsService jobsService;
 
-    /*
-    * find schedule by employee
-    */
     public Iterable<Schedule> getScheduleByClockId(int clockId) {
         return scheduleRepository.findScheduleByClockId(clockId);
     }
 
-    /*
-    * find schedule by job
-    */
     public Iterable<Schedule> getScheduleByJobId(int jobId) {
         return scheduleRepository.findScheduleByClockId(jobId);
     }
 
-    /*
-    * find all schedules by business
-    */
     public Iterable<Schedule> getScheduleByBizId(int bizId) {
         return scheduleRepository.findScheduleByBizId(bizId);
     }
 
-    /*
-    * find all job id's of jobs assigned to employee
-    * This and the method below could be refactored into a combination of the two.
-    */
     public Iterable<Integer> getJobIdsByClockId(int id) {
         return scheduleRepository.findJobIdsByClockId(id);
     }
 
-    /*
-    * find all jobs assigned to employee
-    */
     public Iterable<Jobs> findJobsAssignedToEmployee(int id) {
         ArrayList<Jobs> jobs = new ArrayList<>();
         for (int jobId : getJobIdsByClockId(id)) {
@@ -63,9 +47,6 @@ public class ScheduleService {
         return jobs;
     }
 
-    /*
-    * find all employees assigned to job
-    */
     public Iterable<Clock> findAllEmployeesOnJob(int jobId) {
         ArrayList<Clock> clock = new ArrayList<>();
         for (int employee : scheduleRepository.findClockIdsByJobId(jobId)) {
@@ -74,16 +55,10 @@ public class ScheduleService {
         return clock;
     }
 
-    /*
-    * check if schedule already exists
-    */
     public boolean checkIfExists(int clockId, int jobId) {
         return scheduleRepository.existsByClockIdAndJobId(clockId, jobId);
     }
 
-    /*
-    * delete schedule by id
-    */
     public void deleteById(Schedule schedule) {
         scheduleRepository.delete(schedule);
     }

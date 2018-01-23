@@ -10,27 +10,26 @@ import com.timeclock.web.ClockBeta.repository.HistoryRepository;
 
 @Service
 public class HistoryService {
-	
-	@Autowired
-	HistoryRepository historyRepository;
 
-	public Iterable<History> findByUserId(int id) {
-		return historyRepository.findByUserId(id);
-	}
+    @Autowired
+    HistoryRepository historyRepository;
 
-	public void saveHistory(
-			int userId,
-			Date startTime,
-			Date endTime,
-			long shiftTime
-			)
-	{
-		History h = new History();
-		h.setUserId(userId);
-		h.setClockIn(startTime);
-		h.setClockOut(endTime);
-		h.setShiftTime(shiftTime);
-		historyRepository.save(h);
-	}
-	
+    public Iterable<History> findByUserId(int id) {
+        return historyRepository.findByUserId(id);
+    }
+
+    public void saveHistory(
+        int userId,
+        Date startTime,
+        Date endTime,
+        long shiftTime
+    ) {
+        History h = new History();
+        h.setUserId(userId);
+        h.setClockIn(startTime);
+        h.setClockOut(endTime);
+        h.setShiftTime(shiftTime);
+        historyRepository.save(h);
+    }
+
 }

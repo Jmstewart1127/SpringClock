@@ -35,7 +35,7 @@ public class MaterialService {
         Iterable<Material> materials = materialRepository.findByJobId(jobId);
         double totalCost = 0;
         for (Material material : materials) {
-           totalCost += material.getTotalPrice();
+            totalCost += material.getTotalPrice();
         }
         return Math.round(totalCost * 100d) / 100d;
     }

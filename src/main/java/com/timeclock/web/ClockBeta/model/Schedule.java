@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Schedule {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "biz_id")
     private int bizId;

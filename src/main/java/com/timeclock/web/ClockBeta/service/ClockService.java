@@ -15,229 +15,229 @@ import com.timeclock.web.ClockBeta.repository.ClockRepository;
 
 @Service
 public class ClockService {
-	
-	@Autowired
-	ClockRepository clockRepository;
 
-	@Autowired
-	BusinessService businessService;
-	
-	@Autowired
-	HistoryService historyService;
+    @Autowired
+    ClockRepository clockRepository;
 
-	@Autowired
-	JobsService jobsService;
-	
-	@Autowired
-	ClockLogic clockLogic;
+    @Autowired
+    BusinessService businessService;
 
-	@Autowired 
-	UserAuthDetails userAuthDetails;
-	
-	public void handleClockInOut(int id) {
-		if (this.findClockedInById(id)) {
-			this.clockOut(id);
-		} else {
-			this.clockIn(id);
-		}
-	}
+    @Autowired
+    HistoryService historyService;
 
-	public void clockIn(int id) {
-		if (!this.findClockedInById(id)) {
-			clockRepository.updateClock(id, new Date(), new Date());
-		}
-	}
+    @Autowired
+    JobsService jobsService;
 
-	public void clockOut(int id) {
+    @Autowired
+    ClockLogic clockLogic;
+
+    @Autowired
+    UserAuthDetails userAuthDetails;
+
+    public void handleClockInOut(int id) {
+        if (this.findClockedInById(id)) {
+            this.clockOut(id);
+        } else {
+            this.clockIn(id);
+        }
+    }
+
+    public void clockIn(int id) {
+        if (!this.findClockedInById(id)) {
+            clockRepository.updateClock(id, new Date(), new Date());
+        }
+    }
+
+    public void clockOut(int id) {
         clockOutIfClockedInWithoutJobId(id);
-	}
+    }
 
-	public void clockInAtJob(int id, int jobId) {
+    public void clockInAtJob(int id, int jobId) {
         clockInIfClockedOut(id, jobId);
-	}
+    }
 
-	private void clockInIfClockedOut(int employeeId, int jobId) {
+    private void clockInIfClockedOut(int employeeId, int jobId) {
         if (!this.findClockedInById(employeeId)) {
             clockRepository.clockIn(employeeId, jobId, new Date(), new Date());
         }
     }
 
-	public void clockOutFromJob(int id, int jobId) {
-		clockOutIfClockedIn(id, jobId);
-	}
-
-	private void handleClockOut(int employeeId, int jobId) {
-		initializeClockLogicForEmployee(employeeId);
-		updateEmployeeDataUponClockOut(employeeId, jobId);
-		updateLaborCost(jobId);
-		updateHistory(employeeId);
-	}
-
-	private void clockOutIfClockedIn(int employeeId, int jobId) {
-		if (findClockedInById(employeeId)) {
-			handleClockOut(employeeId, jobId);
-		}
-	}
-
-	private void updateEmployeeDataUponClockOut(int employeeId, int jobId) {
-		clockRepository.clockOut(
-				employeeId,
-				jobId,
-				clockLogic.getEndTime(),
-				clockLogic.getShiftTime(),
-				clockLogic.getUpdatedWeekTime(),
-				clockLogic.getUpdatedWeekTimeInHours(),
-				clockLogic.getWeeklyPay()
-		);
-	}
-
-	private void handleClockOutWithoutJobId(int employeeId) {
-	    initializeClockLogicForEmployee(employeeId);
-	    updateEmployeeDataUponClockOutWithoutUsingJobId(employeeId);
-	    updateHistory(employeeId);
+    public void clockOutFromJob(int id, int jobId) {
+        clockOutIfClockedIn(id, jobId);
     }
 
-    private void clockOutIfClockedInWithoutJobId(int employeeId) {
-	    if (findClockedInById(employeeId)) {
-	        handleClockOutWithoutJobId(employeeId);
+    private void handleClockOut(int employeeId, int jobId) {
+        initializeClockLogicForEmployee(employeeId);
+        updateEmployeeDataUponClockOut(employeeId, jobId);
+        updateLaborCost(jobId);
+        updateHistory(employeeId);
+    }
+
+    private void clockOutIfClockedIn(int employeeId, int jobId) {
+        if (findClockedInById(employeeId)) {
+            handleClockOut(employeeId, jobId);
         }
     }
 
-	private void updateEmployeeDataUponClockOutWithoutUsingJobId(int employeeId) {
-		clockRepository.updateClock(
-				employeeId,
-                clockLogic.getEndTime(),
-                clockLogic.getShiftTime(),
-                clockLogic.getUpdatedWeekTime(),
-                clockLogic.getUpdatedWeekTimeInHours(),
-                clockLogic.getWeeklyPay()
-		);
-	}
+    private void updateEmployeeDataUponClockOut(int employeeId, int jobId) {
+        clockRepository.clockOut(
+            employeeId,
+            jobId,
+            clockLogic.getEndTime(),
+            clockLogic.getShiftTime(),
+            clockLogic.getUpdatedWeekTime(),
+            clockLogic.getUpdatedWeekTimeInHours(),
+            clockLogic.getWeeklyPay()
+        );
+    }
 
-	private void initializeClockLogicForEmployee(int employeeId) {
-		clockLogic.initializeClockLogic(
-				findLastRefreshTimeById(employeeId),
-				newEndTime(),
-				findCurrentWeekTimeById(employeeId),
-				findPayRateById(employeeId)
-		);
-	}
+    private void handleClockOutWithoutJobId(int employeeId) {
+        initializeClockLogicForEmployee(employeeId);
+        updateEmployeeDataUponClockOutWithoutUsingJobId(employeeId);
+        updateHistory(employeeId);
+    }
 
-	private Date newEndTime() {
-		return new Date();
-	}
+    private void clockOutIfClockedInWithoutJobId(int employeeId) {
+        if (findClockedInById(employeeId)) {
+            handleClockOutWithoutJobId(employeeId);
+        }
+    }
 
-	private void updateLaborCost(int jobId) {
-		jobsService.updateLaborCost(jobId, clockLogic.getShiftPay());
-	}
+    private void updateEmployeeDataUponClockOutWithoutUsingJobId(int employeeId) {
+        clockRepository.updateClock(
+            employeeId,
+            clockLogic.getEndTime(),
+            clockLogic.getShiftTime(),
+            clockLogic.getUpdatedWeekTime(),
+            clockLogic.getUpdatedWeekTimeInHours(),
+            clockLogic.getWeeklyPay()
+        );
+    }
 
-	private void updateHistory(int employeeId) {
-		historyService.saveHistory(
-				employeeId,
-				clockLogic.getStartTime(),
-				clockLogic.getEndTime(),
-				clockLogic.getShiftTime()
-		);
-	}
+    private void initializeClockLogicForEmployee(int employeeId) {
+        clockLogic.initializeClockLogic(
+            findLastRefreshTimeById(employeeId),
+            newEndTime(),
+            findCurrentWeekTimeById(employeeId),
+            findPayRateById(employeeId)
+        );
+    }
 
-	private void updateEmployeeDataUponRefresh(int employeeId, int jobId) {
-		clockRepository.refreshClockWithJobId(
-				employeeId,
-				jobId,
-				new Date(),
-				clockLogic.getShiftTime(),
-				clockLogic.getUpdatedWeekTime(),
-				clockLogic.getUpdatedWeekTimeInHours(),
-				clockLogic.getWeeklyPay()
-		);
-	}
+    private Date newEndTime() {
+        return new Date();
+    }
 
-	private void handleRefresh(int employeeId, int jobId) {
-		initializeClockLogicForEmployee(employeeId);
-		updateEmployeeDataUponRefresh(employeeId, jobId);
-		updateLaborCost(jobId);
-		updateHistory(employeeId);
-	}
+    private void updateLaborCost(int jobId) {
+        jobsService.updateLaborCost(jobId, clockLogic.getShiftPay());
+    }
 
-	public void refreshClockAndAddLabor(int id) {
-		if (findClockedInById(id)) {
-			handleRefresh(id, findClockedInAtById(id));
-		}
-	}
+    private void updateHistory(int employeeId) {
+        historyService.saveHistory(
+            employeeId,
+            clockLogic.getStartTime(),
+            clockLogic.getEndTime(),
+            clockLogic.getShiftTime()
+        );
+    }
 
-	public Iterable<Clock> findAllEmployeesByAdmin(Authentication auth) {
-		Iterable<Business> usersBusinesses = businessService.findByCurrentUserId(auth);
-		ArrayList<Clock> allEmployees = new ArrayList<Clock>();
-		for (Business business : usersBusinesses) {
-			Iterable<Clock> employeesFound = this.findByBizId(business.getId());
-			for (Clock clocks : employeesFound) {
-				allEmployees.add(clocks);
-			}
-		}
-		return allEmployees;
-	}
+    private void updateEmployeeDataUponRefresh(int employeeId, int jobId) {
+        clockRepository.refreshClockWithJobId(
+            employeeId,
+            jobId,
+            new Date(),
+            clockLogic.getShiftTime(),
+            clockLogic.getUpdatedWeekTime(),
+            clockLogic.getUpdatedWeekTimeInHours(),
+            clockLogic.getWeeklyPay()
+        );
+    }
 
-	public Iterable<Clock> findAllEmployeesByAdminId(int id) {
-		Iterable<Business> usersBusinesses = businessService.findBusinessesByUserId(id);
-		ArrayList<Clock> allEmployees = new ArrayList<Clock>();
-		for (Business business : usersBusinesses) {
-			Iterable<Clock> employeesFound = this.findByBizId(business.getId());
-			for (Clock clocks : employeesFound) {
-				allEmployees.add(clocks);
-			}
-		}
-		return allEmployees;
-	}
+    private void handleRefresh(int employeeId, int jobId) {
+        initializeClockLogicForEmployee(employeeId);
+        updateEmployeeDataUponRefresh(employeeId, jobId);
+        updateLaborCost(jobId);
+        updateHistory(employeeId);
+    }
 
-	public void deleteById(int id) {
-		clockRepository.delete(findUserById(id));
-	}
+    public void refreshClockAndAddLabor(int id) {
+        if (findClockedInById(id)) {
+            handleRefresh(id, findClockedInAtById(id));
+        }
+    }
 
-	private Date findLastRefreshTimeById(int id) {
-		return clockRepository.findLastRefreshById(id);
-	}
+    public Iterable<Clock> findAllEmployeesByAdmin(Authentication auth) {
+        Iterable<Business> usersBusinesses = businessService.findByCurrentUserId(auth);
+        ArrayList<Clock> allEmployees = new ArrayList<Clock>();
+        for (Business business : usersBusinesses) {
+            Iterable<Clock> employeesFound = this.findByBizId(business.getId());
+            for (Clock clocks : employeesFound) {
+                allEmployees.add(clocks);
+            }
+        }
+        return allEmployees;
+    }
 
-	private long findCurrentWeekTimeById(int id) {
-		return clockRepository.findWeekTimeById(id);
-	}
+    public Iterable<Clock> findAllEmployeesByAdminId(int id) {
+        Iterable<Business> usersBusinesses = businessService.findBusinessesByUserId(id);
+        ArrayList<Clock> allEmployees = new ArrayList<Clock>();
+        for (Business business : usersBusinesses) {
+            Iterable<Clock> employeesFound = this.findByBizId(business.getId());
+            for (Clock clocks : employeesFound) {
+                allEmployees.add(clocks);
+            }
+        }
+        return allEmployees;
+    }
 
-	private double findPayRateById(int id) {
-		return clockRepository.findPayRateById(id);
-	}
+    public void deleteById(int id) {
+        clockRepository.delete(findUserById(id));
+    }
 
-	public void resetPayPeriod(int bizId) {
-		clockRepository.resetClock(bizId);
-	}
-	
-	public Iterable<Clock> findByBizId(int bizId) {
-		return clockRepository.findByBizId(bizId);
-	}
-	
-	public Boolean findClockedInById(int id) {
-		return clockRepository.findClockedById(id);
-	}
-	
-	public Iterable<Clock> findById(int id) {
-		return clockRepository.findById(id);
-	}
-	
-	public Clock findUserById(int id) {
-		return clockRepository.findUserById(id);
-	}
+    private Date findLastRefreshTimeById(int id) {
+        return clockRepository.findLastRefreshById(id);
+    }
 
-	private int findClockedInAtById(int id) {
-		return clockRepository.findClockedInAtById(id);
-	}
-	
-	public void delete(Clock clock) {
-		clockRepository.delete(clock);
-	}
-	
-	public Clock saveClock(Clock clock) {
-		return clockRepository.save(clock);
-	}
-	
-	public int findBizIdById(int id) {
-		return clockRepository.findBizIdById(id);
-	}
+    private long findCurrentWeekTimeById(int id) {
+        return clockRepository.findWeekTimeById(id);
+    }
+
+    private double findPayRateById(int id) {
+        return clockRepository.findPayRateById(id);
+    }
+
+    public void resetPayPeriod(int bizId) {
+        clockRepository.resetClock(bizId);
+    }
+
+    public Iterable<Clock> findByBizId(int bizId) {
+        return clockRepository.findByBizId(bizId);
+    }
+
+    public Boolean findClockedInById(int id) {
+        return clockRepository.findClockedById(id);
+    }
+
+    public Iterable<Clock> findById(int id) {
+        return clockRepository.findById(id);
+    }
+
+    public Clock findUserById(int id) {
+        return clockRepository.findUserById(id);
+    }
+
+    private int findClockedInAtById(int id) {
+        return clockRepository.findClockedInAtById(id);
+    }
+
+    public void delete(Clock clock) {
+        clockRepository.delete(clock);
+    }
+
+    public Clock saveClock(Clock clock) {
+        return clockRepository.save(clock);
+    }
+
+    public int findBizIdById(int id) {
+        return clockRepository.findBizIdById(id);
+    }
 }

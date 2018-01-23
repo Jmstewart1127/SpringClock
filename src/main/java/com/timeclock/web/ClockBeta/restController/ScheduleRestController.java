@@ -23,20 +23,17 @@ public class ScheduleRestController {
         return scheduleService.getScheduleByClockId(clockId);
     }
 
-
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/jobs/assigned/employee/{clockId}")
     public Iterable<Jobs> showJobAddressesAssignedToEmployee(@PathVariable int clockId) {
         return scheduleService.findJobsAssignedToEmployee(clockId);
     }
 
-
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/jobs/employee/schedule/jobs/{clockId}")
     public Iterable<Integer> showJobIdsByEmployeeId(@PathVariable int clockId) {
         return scheduleService.getJobIdsByClockId(clockId);
     }
-
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/jobs/assigned/employees/{jobId}")

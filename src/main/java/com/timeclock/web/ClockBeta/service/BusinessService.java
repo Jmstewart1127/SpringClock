@@ -11,33 +11,33 @@ import com.timeclock.web.ClockBeta.repository.BusinessRepository;
 
 @Service
 public class BusinessService {
-	
-	@Autowired
-	BusinessRepository businessRepository;
 
-	@Autowired
+    @Autowired
+    BusinessRepository businessRepository;
+
+    @Autowired
     UserAuthDetails userAuthDetails;
 
-	public Business findById(int id) {
-		return businessRepository.findById(id);
-	}
-	
-	public Business findByBizName(String bizName) {
-		return businessRepository.findByBizName(bizName);
-	}
+    public Business findById(int id) {
+        return businessRepository.findById(id);
+    }
 
-	public Iterable<Business> findByCurrentUserId(Authentication auth) {
-	    return businessRepository.findByAdminId(userAuthDetails.getUserId(auth));
+    public Business findByBizName(String bizName) {
+        return businessRepository.findByBizName(bizName);
+    }
+
+    public Iterable<Business> findByCurrentUserId(Authentication auth) {
+        return businessRepository.findByAdminId(userAuthDetails.getUserId(auth));
     }
 
     public Iterable<Business> findBusinessesByUserId(int id) {
         return businessRepository.findByAdminId(id);
     }
 
-	public void saveBusiness(Business business) {
-		businessRepository.save(business);
-	}
+    public void saveBusiness(Business business) {
+        businessRepository.save(business);
+    }
 
-	//add material and labor cost update methods
-	
+    //add material and labor cost update methods
+
 }

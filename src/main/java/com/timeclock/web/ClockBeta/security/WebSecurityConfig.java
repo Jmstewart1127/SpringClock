@@ -13,10 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    
-	@Autowired
-	DataSource dataSource;
-	
+
+    @Autowired
+    DataSource dataSource;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         //Web resources
@@ -32,31 +32,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/rest/employees");
         web.ignoring().antMatchers("/register");
     }
-	
-	@Override
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/hello").permitAll()
-                .anyRequest().authenticated()
-                .and()
+            .antMatchers("/", "/hello").permitAll()
+            .anyRequest().authenticated()
+            .and()
             .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .defaultSuccessUrl("/hello/business")
-                .and()
+            .loginPage("/login")
+            .permitAll()
+            .defaultSuccessUrl("/hello/business")
+            .and()
             .logout()
-                .permitAll();
+            .permitAll();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .inMemoryAuthentication()
-                .withUser("jake").password("password").roles("USER");
-        
-		auth.jdbcAuthentication().dataSource(dataSource)
-			.usersByUsernameQuery("select user_name, password, enabled from user where user_name=?")
-			.authoritiesByUsernameQuery("select user_name, role from user_role where user_name=?");
+            .withUser("jake").password("password").roles("USER");
+
+        auth.jdbcAuthentication().dataSource(dataSource)
+            .usersByUsernameQuery("select user_name, password, enabled from user where user_name=?")
+            .authoritiesByUsernameQuery("select user_name, role from user_role where user_name=?");
     }
 }

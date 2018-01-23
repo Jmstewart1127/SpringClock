@@ -7,13 +7,13 @@ import org.springframework.data.repository.query.Param;
 import com.timeclock.web.ClockBeta.model.User;
 
 public interface UserRepository extends CrudRepository<User, Long> {
-	
-	User findById(int id);
-	
-	User findByUserNameAndPassword(String username, String password);
-	
-	@Query("SELECT id FROM com.timeclock.web.ClockBeta.model.User WHERE user_name= :username")
-	int findIdByUserName(@Param("username")String username);
-	
-	
+
+    User findById(int id);
+
+    User findByUserNameAndPassword(String username, String password);
+
+    @Query("SELECT id FROM com.timeclock.web.ClockBeta.model.User WHERE user_name= :username")
+    int findIdByUserName(@Param("username") String username);
+
+
 }

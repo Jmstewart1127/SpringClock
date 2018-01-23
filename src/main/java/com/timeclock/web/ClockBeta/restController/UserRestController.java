@@ -13,7 +13,6 @@ public class UserRestController {
 
     @Autowired
     UserService userService;
-    
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping(value="/rest/login/{username}/{password}")

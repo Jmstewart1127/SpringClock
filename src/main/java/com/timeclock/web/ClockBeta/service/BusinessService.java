@@ -18,7 +18,7 @@ public class BusinessService {
     @Autowired
     UserAuthDetails userAuthDetails;
 
-    public Business findById(int id) {
+    public Business findBusinessById(int id) {
         return businessRepository.findById(id);
     }
 
@@ -38,6 +38,16 @@ public class BusinessService {
         businessRepository.save(business);
     }
 
-    //add material and labor cost update methods
+    public void updateYtdLaborCost(int businessId, double additionalLaborCost) {
+        double currentLaborCost = businessRepository.findYtdLaborCostById(businessId);
+        double newLaborCost = currentLaborCost + additionalLaborCost;
+        businessRepository.updateYtdLaborCost(businessId, newLaborCost);
+    }
+
+    public void updateYtdMaterialCost(int businessId, double additionalMaterialCost) {
+        double currentMaterialCost = businessRepository.findYtdMaterialCostById(businessId);
+        double newMaterialCost = currentMaterialCost + additionalMaterialCost;
+        businessRepository.updateYtdMaterialCost(businessId, newMaterialCost);
+    }
 
 }

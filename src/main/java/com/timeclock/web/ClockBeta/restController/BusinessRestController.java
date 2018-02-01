@@ -28,4 +28,10 @@ public class BusinessRestController {
         return businessService.findByCurrentUserId(auth);
     }
 
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value = "/rest/user/{id}/businesses")
+    public Business getBusinessById(@PathVariable int id) {
+        return businessService.findBusinessById(id);
+    }
+
 }

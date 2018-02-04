@@ -12,7 +12,7 @@ public class ClockRestController {
     @Autowired
     ClockService clockService;
 
-    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000", "chrome-extension://aejoelaoggembcahagimdiliamlcdmfm"})
     @RequestMapping(value = "/rest/employee/add", method = RequestMethod.POST)
     public Clock addNewEmployee(Clock clock) {
         return clockService.saveClock(clock);

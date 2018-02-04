@@ -1,6 +1,8 @@
 package com.timeclock.web.ClockBeta.restController;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.timeclock.web.ClockBeta.model.Clock;
@@ -14,8 +16,9 @@ public class ClockRestController {
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000", "chrome-extension://aejoelaoggembcahagimdiliamlcdmfm"})
     @RequestMapping(value = "/rest/employee/add", method = RequestMethod.POST)
-    public Clock addNewEmployee(Clock clock) {
-        return clockService.saveClock(clock);
+    public ResponseEntity<String> addNewEmployee(@RequestBody Clock clock) {
+        clockService.saveClock(clock);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})

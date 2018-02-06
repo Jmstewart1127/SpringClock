@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.timeclock.web.ClockBeta.model.Business;
-import com.timeclock.web.ClockBeta.model.Material;
 import com.timeclock.web.ClockBeta.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,7 +72,7 @@ public class JobsController {
         @Valid Jobs jobs,
         BindingResult bindingResult) {
 
-        Jobs jobExists = jobsService.findById(jobs.getId());
+        Jobs jobExists = jobsService.findJobById(jobs.getId());
 
         System.out.println(jobExists);
 
@@ -116,7 +115,7 @@ public class JobsController {
 
     @RequestMapping(value = "/hello/jobs/{id}/update", method = RequestMethod.GET)
     public ModelAndView showUpdateJobsPage(ModelAndView modelAndView, @PathVariable int id) {
-        Jobs jobs = jobsService.findById(id);
+        Jobs jobs = jobsService.findJobById(id);
         modelAndView.addObject("jobs", jobs);
         modelAndView.setViewName("updatejobs");
         return modelAndView;

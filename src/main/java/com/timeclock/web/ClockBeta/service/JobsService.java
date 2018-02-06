@@ -19,7 +19,7 @@ public class JobsService {
     @Autowired
     ScheduleService scheduleService;
 
-    public Jobs findById(int id) {
+    public Jobs findJobById(int id) {
         return jobsRepository.findById(id);
     }
 
@@ -82,9 +82,6 @@ public class JobsService {
         jobsRepository.updateMaterialCost(id, materialCost);
     }
 
-    /*
-    * Update labor cost
-    */
     public void updateLaborCost(int jobId, double laborAmount) {
         jobsRepository.updateLaborCost(jobId, jobsRepository.findLaborCostById(jobId) + laborAmount);
     }

@@ -190,7 +190,7 @@ public class ClockService {
     }
 
     public void deleteById(int id) {
-        clockRepository.delete(findUserById(id));
+        clockRepository.delete(findEmployeeById(id));
     }
 
     private Date findLastRefreshTimeById(int id) {
@@ -221,7 +221,7 @@ public class ClockService {
         return clockRepository.findById(id);
     }
 
-    public Clock findUserById(int id) {
+    public Clock findEmployeeById(int id) {
         return clockRepository.findUserById(id);
     }
 

@@ -22,8 +22,14 @@ public class ClockRestController {
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/get/employee/{id}")
-    public Iterable<Clock> getEmployeeById(@PathVariable int id) {
+    public Iterable<Clock> getEmployeeByIdForMobileApp(@PathVariable int id) {
         return clockService.findById(id);
+    }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping("/rest/employee/{id}")
+    public Clock getEmployeeById(@PathVariable int id) {
+        return clockService.findEmployeeById(id);
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -16,11 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.timeclock.web.ClockBeta.logistics.UserAuthDetails;
 import com.timeclock.web.ClockBeta.model.Business;
 import com.timeclock.web.ClockBeta.model.Jobs;
-import com.timeclock.web.ClockBeta.repository.BusinessRepository;
 import com.timeclock.web.ClockBeta.service.BusinessService;
-import com.timeclock.web.ClockBeta.service.EmailService;
 import com.timeclock.web.ClockBeta.service.JobsService;
-import com.timeclock.web.ClockBeta.service.UserService;
 
 @Controller
 @SessionAttributes("adminName")
@@ -61,7 +57,7 @@ public class BusinessController {
         Jobs j = new Jobs();
         j.setBizId(business.getId());
         j.setJobAddress(jobs.getJobAddress());
-        jobsService.saveJobs(j);
+        jobsService.saveJob(j);
         return modelAndView;
     }
 

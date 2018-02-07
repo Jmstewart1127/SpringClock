@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ScheduleService {
@@ -38,7 +39,7 @@ public class ScheduleService {
     }
 
     public Iterable<Jobs> findJobsAssignedToEmployee(int id) {
-        ArrayList<Jobs> jobs = new ArrayList<>();
+        ArrayList<Jobs> jobs = new ArrayList<Jobs>();
         for (int jobId : getJobIdsByClockId(id)) {
             if (jobsService.findJobById(jobId) != null) {
                 jobs.add(jobsService.findJobById(jobId));
@@ -48,11 +49,17 @@ public class ScheduleService {
     }
 
     public Iterable<Clock> findAllEmployeesOnJob(int jobId) {
-        ArrayList<Clock> clock = new ArrayList<>();
+        ArrayList<Clock> clock = new ArrayList<Clock>();
         for (int employee : scheduleRepository.findClockIdsByJobId(jobId)) {
             clock.add(clockService.findUserById(employee));
         }
         return clock;
+    }
+
+    public void addToJobs(List<Schedule> schedules) {
+        for (Schedule s : schedules) {
+            this.saveSchedule(s);
+        }
     }
 
     public boolean checkIfExists(int clockId, int jobId) {

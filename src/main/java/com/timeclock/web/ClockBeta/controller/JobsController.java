@@ -50,7 +50,7 @@ public class JobsController {
             j.setCategory(jobs.getCategory());
             j.setJobAddress(jobs.getJobAddress());
             j.setAmountCharged(jobs.getAmountDue());
-            jobsService.saveJobs(j);
+            jobsService.saveJob(j);
 
             modelAndView.addObject(jobs.getJobName());
             modelAndView.setViewName("newjobadded");
@@ -130,7 +130,7 @@ public class JobsController {
             modelAndView.setViewName("updatejobstatus");
         } else {
             modelAndView.setViewName("showjobs");
-            jobsService.saveJobs(jobs);
+            jobsService.saveJob(jobs);
         }
 
         return modelAndView;

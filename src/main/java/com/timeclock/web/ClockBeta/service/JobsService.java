@@ -102,8 +102,8 @@ public class JobsService {
         checkIfPaid(id, totalAmountPaid);
     }
 
-    public Jobs saveJobs(Jobs jobs) {
-        return jobsRepository.save(jobs);
+    public Jobs saveJob(Jobs job) {
+        return jobsRepository.save(job);
     }
 
 }

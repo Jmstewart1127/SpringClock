@@ -15,13 +15,6 @@ public class ClockRestController {
     ClockService clockService;
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-    @RequestMapping(value = "/rest/employee/add", method = RequestMethod.POST)
-    public ResponseEntity<String> addNewEmployee(@RequestBody Clock clock) {
-        clockService.saveClock(clock);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/employees/{id}")
     public Iterable<Clock> showAllEmployeesByBizId(@PathVariable int id) {
         return clockService.findByBizId(id);
@@ -79,6 +72,13 @@ public class ClockRestController {
     @RequestMapping(value = "/rest/clock/delete/{id}")
     public void deleteEmployeeById(@PathVariable int id) {
         clockService.deleteById(id);
+    }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value = "/rest/employee/add", method = RequestMethod.POST)
+    public ResponseEntity<String> addNewEmployee(@RequestBody Clock clock) {
+        clockService.saveClock(clock);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 

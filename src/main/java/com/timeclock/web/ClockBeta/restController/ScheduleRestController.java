@@ -48,4 +48,20 @@ public class ScheduleRestController {
         scheduleService.addToJobs(schedules);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value="/rest/schedule/update", method = RequestMethod.PUT)
+    public ResponseEntity<String> updateSchedule(@RequestBody Schedule schedule) {
+        scheduleService.saveSchedule(schedule);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value="/rest/schedule/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteSchedule(@RequestBody Schedule schedule) {
+        scheduleService.delete(schedule);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
 }

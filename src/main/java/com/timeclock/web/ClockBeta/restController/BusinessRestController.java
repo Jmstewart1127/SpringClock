@@ -40,4 +40,18 @@ public class BusinessRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value = "/rest/business/update", method = RequestMethod.PUT)
+    public ResponseEntity<String> updateBusiness(@RequestBody Business business) {
+        businessService.saveBusiness(business);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value = "/rest/business/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteBusiness(@RequestBody Business business) {
+        businessService.delete(business);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 }

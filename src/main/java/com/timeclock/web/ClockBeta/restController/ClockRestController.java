@@ -87,5 +87,19 @@ public class ClockRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value = "/rest/employee/update", method = RequestMethod.PUT)
+    public ResponseEntity<String> updateEmployee(@RequestBody Clock clock) {
+        clockService.saveClock(clock);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value = "/rest/employee/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteEmployee(@RequestBody Clock clock) {
+        clockService.delete(clock);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 
 }

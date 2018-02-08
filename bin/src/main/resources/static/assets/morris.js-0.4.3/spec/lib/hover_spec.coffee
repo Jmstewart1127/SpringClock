@@ -53,8 +53,8 @@ describe "Morris.Hover", ->
         @element.should.have.css('left', '50px')
         @element.should.have.css('top', '40px')
 
-  describe "#update", ->
-    it "should update content, show and reposition the popup", ->
+  describe "#updateClock", ->
+    it "should updateClock content, show and reposition the popup", ->
       hover = new Morris.Hover(parent: $('#test'))
       html = "<div style='width:84px;height:84px'>Hello, Everyone!</div>"
       hover.update(html, 150, 200)

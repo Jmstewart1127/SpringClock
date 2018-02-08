@@ -130,7 +130,7 @@ public class ClockController {
 
     }
 
-    // Show update employee form
+    // Show updateClock employee form
     @RequestMapping(value = "/hello/employee/{id}/update", method = RequestMethod.GET)
     public ModelAndView showUpdateEmployeePage(ModelAndView modelAndView, @PathVariable int id) {
         Clock clock = clockService.findEmployeeById(id);

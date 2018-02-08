@@ -6,9 +6,6 @@ import com.timeclock.web.ClockBeta.repository.MaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Service
 public class MaterialService {
@@ -17,7 +14,7 @@ public class MaterialService {
     MaterialRepository materialRepository;
 
     @Autowired
-    MaterialCostLogic mcl;
+    MaterialCostLogic materialCostLogic;
 
     public Iterable<Material> findByJobId(int jobId) {
         return materialRepository.findByJobId(jobId);
@@ -27,8 +24,12 @@ public class MaterialService {
         materialRepository.save(material);
     }
 
+    public void deleteMaterial(Material material) {
+        materialRepository.delete(material);
+    }
+
     public double calculateTotalPrice(int quantity, double price) {
-        return mcl.storeTotalPrice(quantity, price);
+        return materialCostLogic.storeTotalPrice(quantity, price);
     }
 
     public double totalPriceOfAllJobMaterials(int jobId) {

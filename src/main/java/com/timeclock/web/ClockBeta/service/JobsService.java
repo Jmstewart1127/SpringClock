@@ -8,8 +8,6 @@ import com.timeclock.web.ClockBeta.logistics.PaymentLogic;
 import com.timeclock.web.ClockBeta.model.Jobs;
 import com.timeclock.web.ClockBeta.repository.JobsRepository;
 
-import java.util.ArrayList;
-
 @Service
 public class JobsService {
 
@@ -65,7 +63,7 @@ public class JobsService {
 
     public void deleteJob(int id) {
         for (Schedule s : scheduleService.getScheduleByJobId(id)) {
-            scheduleService.deleteById(s);
+            scheduleService.delete(s);
         }
         jobsRepository.deleteJob(id);
     }

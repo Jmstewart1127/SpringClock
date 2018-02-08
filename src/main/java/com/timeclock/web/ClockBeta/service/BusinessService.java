@@ -50,4 +50,8 @@ public class BusinessService {
         businessRepository.updateYtdMaterialCost(businessId, newMaterialCost);
     }
 
+    public void delete(Business business) {
+        businessRepository.delete(business);
+    }
+
 }

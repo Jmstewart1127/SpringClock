@@ -33,4 +33,19 @@ public class MaterialsRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value = "/rest/material/update", method = RequestMethod.PUT)
+    public ResponseEntity<String> updateMaterial(@RequestBody Material material) {
+        materialService.saveMaterial(material);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value = "/rest/material/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteMaterial(@RequestBody Material material) {
+        materialService.deleteMaterial(material);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
 }

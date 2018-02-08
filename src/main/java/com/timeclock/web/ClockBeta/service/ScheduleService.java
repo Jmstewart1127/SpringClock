@@ -66,7 +66,7 @@ public class ScheduleService {
         return scheduleRepository.existsByClockIdAndJobId(clockId, jobId);
     }
 
-    public void deleteById(Schedule schedule) {
+    public void delete(Schedule schedule) {
         scheduleRepository.delete(schedule);
     }
 

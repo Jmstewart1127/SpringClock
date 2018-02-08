@@ -233,8 +233,8 @@ public class ClockService {
         clockRepository.delete(clock);
     }
 
-    public Clock saveClock(Clock clock) {
-        return clockRepository.save(clock);
+    public void saveClock(Clock clock) {
+        clockRepository.save(clock);
     }
 
     public int findBizIdById(int id) {

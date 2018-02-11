@@ -17,7 +17,6 @@ public class ScheduleRestController {
     @Autowired
     ScheduleService scheduleService;
 
-
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/jobs/employee/schedule/{clockId}")
     public Iterable<Schedule> showJobsAssignedToEmployeeById(@PathVariable int clockId) {
@@ -46,6 +45,13 @@ public class ScheduleRestController {
     @RequestMapping(value="/rest/jobs/assign/employees", method = RequestMethod.POST)
     public ResponseEntity<String> assignEmployeesToNewJobs(@RequestBody List<Schedule> schedules) {
         scheduleService.addToJobs(schedules);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value="/rest/jobs/assign/single/employee", method = RequestMethod.POST)
+    public ResponseEntity<String> assignOneEmployeeToNewJob(@RequestBody Schedule schedule) {
+        scheduleService.saveSchedule(schedule);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

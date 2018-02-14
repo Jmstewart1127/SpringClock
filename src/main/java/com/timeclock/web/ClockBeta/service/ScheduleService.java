@@ -73,7 +73,7 @@ public class ScheduleService {
     public void saveSchedule(Schedule schedule) {
         int clockId = schedule.getClockId();
         int jobId = schedule.getJobId();
-        if (checkIfExists(clockId, jobId)) {
+        if (!checkIfExists(clockId, jobId)) {
             scheduleRepository.save(schedule);
         }
     }

@@ -18,6 +18,8 @@ public class Schedule {
     private int bizId;
     @Column(name = "clock_id")
     private int clockId;
+    @Column(name = "employee_name")
+    private String employeeName;
     @Column(name = "job_id")
     private int jobId;
 
@@ -47,6 +49,14 @@ public class Schedule {
 
     public void setClockId(int clockId) {
         this.clockId = clockId;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public int getJobId() {

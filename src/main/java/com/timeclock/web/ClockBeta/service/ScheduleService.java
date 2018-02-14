@@ -27,7 +27,7 @@ public class ScheduleService {
     }
 
     public Iterable<Schedule> getScheduleByJobId(int jobId) {
-        return scheduleRepository.findScheduleByClockId(jobId);
+        return scheduleRepository.findScheduleByJobId(jobId);
     }
 
     public Iterable<Schedule> getScheduleByBizId(int bizId) {
@@ -70,8 +70,12 @@ public class ScheduleService {
         scheduleRepository.delete(schedule);
     }
 
-    public Schedule saveSchedule(Schedule schedule) {
-        return scheduleRepository.save(schedule);
+    public void saveSchedule(Schedule schedule) {
+        int clockId = schedule.getClockId();
+        int jobId = schedule.getJobId();
+        if (checkIfExists(clockId, jobId)) {
+            scheduleRepository.save(schedule);
+        }
     }
 
 }

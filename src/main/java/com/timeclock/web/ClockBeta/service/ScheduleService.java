@@ -70,8 +70,12 @@ public class ScheduleService {
         scheduleRepository.delete(schedule);
     }
 
+    private Schedule findByClockIdAndJobId(int clockId, int jobId) {
+        return scheduleRepository.findScheduleByClockIdAndJobId(clockId, jobId);
+    }
+
     public void deleteByClockIdAndJobId(int clockId, int jobId) {
-        scheduleRepository.deleteScheduleByJobIdAndClockId(clockId, jobId);
+        scheduleRepository.delete(findByClockIdAndJobId(clockId, jobId));
     }
 
     public void saveSchedule(Schedule schedule) {

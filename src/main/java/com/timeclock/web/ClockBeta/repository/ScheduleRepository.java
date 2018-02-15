@@ -18,6 +18,8 @@ public interface ScheduleRepository extends CrudRepository<Schedule, Long> {
 
     boolean existsByClockIdAndJobId(int clockId, int jobId);
 
+    void deleteScheduleByJobIdAndClockId(int clockId, int jobId);
+
     @Query("SELECT jobId FROM com.timeclock.web.ClockBeta.model.Schedule"
         + " WHERE clockId= :clockId")
     Iterable<Integer> findJobIdsByClockId(@Param("clockId") int clockId);

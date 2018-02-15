@@ -76,9 +76,9 @@ public class ScheduleRestController {
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-    @RequestMapping(value="/rest/schedule/delete/by/id", method = RequestMethod.DELETE)
+    @RequestMapping(value="/rest/schedule/delete/{clockId}/{jobId}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteScheduleByClockIdAndJobId(
-        @RequestBody int clockId, @RequestBody int jobId) {
+        @PathVariable int clockId, @PathVariable int jobId) {
         scheduleService.deleteByClockIdAndJobId(clockId, jobId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

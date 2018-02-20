@@ -26,7 +26,7 @@ public class ScheduleService {
         return scheduleRepository.findScheduleByClockId(clockId);
     }
 
-    public Iterable<Schedule> getScheduleByJobId(int jobId) {
+    public Iterable<Schedule> getSchedulesByJobId(int jobId) {
         return scheduleRepository.findScheduleByJobId(jobId);
     }
 
@@ -68,6 +68,12 @@ public class ScheduleService {
 
     private Schedule findByClockIdAndJobId(int clockId, int jobId) {
         return scheduleRepository.findScheduleByClockIdAndJobId(clockId, jobId);
+    }
+
+    public void deleteSchedulesByJobId(int jobId) {
+        for (Schedule s : getSchedulesByJobId(jobId)) {
+            delete(s);
+        }
     }
 
     public void deleteSchedulesByClockId(int clockId) {

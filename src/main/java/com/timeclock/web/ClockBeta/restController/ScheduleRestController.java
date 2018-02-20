@@ -26,7 +26,7 @@ public class ScheduleRestController {
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/job/schedule/{jobId}")
     public Iterable<Schedule> showSchedulesByJobId(@PathVariable int jobId) {
-        return scheduleService.getScheduleByJobId(jobId);
+        return scheduleService.getSchedulesByJobId(jobId);
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})

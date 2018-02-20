@@ -40,4 +40,11 @@ public class JobsRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value = "/rest/job/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteJob(@RequestBody Jobs job) {
+        jobsService.deleteJob(job.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 }

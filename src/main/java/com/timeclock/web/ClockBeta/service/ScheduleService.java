@@ -66,16 +66,22 @@ public class ScheduleService {
         return scheduleRepository.existsByClockIdAndJobId(clockId, jobId);
     }
 
-    public void delete(Schedule schedule) {
-        scheduleRepository.delete(schedule);
-    }
-
     private Schedule findByClockIdAndJobId(int clockId, int jobId) {
         return scheduleRepository.findScheduleByClockIdAndJobId(clockId, jobId);
     }
 
+    public void deleteSchedulesByClockId(int clockId) {
+        for (Schedule s : getScheduleByClockId(clockId)) {
+            delete(s);
+        }
+    }
+
     public void deleteByClockIdAndJobId(int clockId, int jobId) {
         scheduleRepository.delete(findByClockIdAndJobId(clockId, jobId));
+    }
+
+    public void delete(Schedule schedule) {
+        scheduleRepository.delete(schedule);
     }
 
     public void saveSchedule(Schedule schedule) {

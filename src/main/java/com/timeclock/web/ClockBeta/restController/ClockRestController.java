@@ -97,7 +97,7 @@ public class ClockRestController {
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping(value = "/rest/employee/delete", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteEmployee(@RequestBody Clock clock) {
-        clockService.delete(clock);
+        clockService.deleteEmployeeAndScheduleData(clock.getId());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

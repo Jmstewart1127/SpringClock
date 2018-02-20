@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.timeclock.web.ClockBeta.model.Business;
+import com.timeclock.web.ClockBeta.model.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class ClockService {
 
     @Autowired
     JobsService jobsService;
+
+    @Autowired
+    ScheduleService scheduleService;
 
     @Autowired
     ClockLogic clockLogic;
@@ -187,6 +191,11 @@ public class ClockService {
             }
         }
         return allEmployees;
+    }
+
+    public void deleteEmployeeAndScheduleData(int clockId) {
+        scheduleService.deleteSchedulesByClockId(clockId);
+        deleteById(clockId);
     }
 
     public void deleteById(int id) {

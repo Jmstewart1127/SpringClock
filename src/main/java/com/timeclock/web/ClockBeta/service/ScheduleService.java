@@ -51,7 +51,9 @@ public class ScheduleService {
     public Iterable<Clock> findAllEmployeesOnJob(int jobId) {
         ArrayList<Clock> clock = new ArrayList<Clock>();
         for (int employee : scheduleRepository.findClockIdsByJobId(jobId)) {
-            clock.add(clockService.findEmployeeById(employee));
+            if (clockService.findEmployeeById(employee) != null) {
+                clock.add(clockService.findEmployeeById(employee));
+            }
         }
         return clock;
     }

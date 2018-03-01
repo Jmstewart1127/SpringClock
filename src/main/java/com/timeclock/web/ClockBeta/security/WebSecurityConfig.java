@@ -30,8 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/error/**");
         web.ignoring().antMatchers("/fonts/**");
         web.ignoring().antMatchers("/img/**");
-        web.ignoring().antMatchers("/rest/**"); // test to see if ignores all rest methods
-        web.ignoring().antMatchers("/rest/employees");
+//        web.ignoring().antMatchers("/rest/**"); // test to see if ignores all rest methods
+//        web.ignoring().antMatchers("/rest/employees");
         web.ignoring().antMatchers("/register");
     }
 

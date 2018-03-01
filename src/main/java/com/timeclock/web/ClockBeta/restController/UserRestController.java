@@ -3,10 +3,7 @@ package com.timeclock.web.ClockBeta.restController;
 import com.timeclock.web.ClockBeta.model.User;
 import com.timeclock.web.ClockBeta.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserRestController {
@@ -19,6 +16,19 @@ public class UserRestController {
     public User loginByRetrievingUserId(@PathVariable String username, @PathVariable String password) {
         return userService.findIdByCredentials(username, password);
     }
+
+//    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+//    @RequestMapping(value="/rest/lock/login")
+//    public User loginWithJWT(@RequestBody String username, @RequestBody String password) {
+//        return userService.findIdByCredentials(username, password);
+//    }
+//
+//    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+//    @RequestMapping(value = "/rest/job/add", method = RequestMethod.POST)
+//    public ResponseEntity<String> addNewJob(@RequestBody Jobs job) {
+//        jobsService.saveJob(job);
+//        return ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
     
 
 }

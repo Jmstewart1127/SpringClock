@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -25,6 +26,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CorsFilter corsFilter;
 
+    @Autowired
+    CorsRegistry corsRegistry;
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/rest/**")
+                .allowedOrigins("https://spring-clock-ui.herokuapp.com", "http://localhost:3000");
+    }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         //Web resources
@@ -36,42 +46,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/error/**");
         web.ignoring().antMatchers("/fonts/**");
         web.ignoring().antMatchers("/img/**");
-//        web.ignoring().antMatchers("/rest/**"); // test to see if ignores all rest methods
-//        web.ignoring().antMatchers("/rest/employees");
         web.ignoring().antMatchers("/register");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        addCorsMappings(corsRegistry);
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/rest/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                // We filter the api/login requests
-                .addFilterBefore(corsFilter, ChannelProcessingFilter.class)
-                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
+                .addFilterBefore(new JWTLoginFilter("/rest/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)
-                // And filter other requests to check the presence of JWT in header
                 .addFilterBefore(new JWTAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
-//            .authorizeRequests()
-//            .antMatchers("/", "/hello").permitAll()
-//            .antMatchers(HttpMethod.POST, "/rest/lock").permitAll()
-//            .anyRequest().authenticated()
-//            .and()
-//            .formLogin()
-//            .loginPage("/login")
-//            .permitAll()
-//            .defaultSuccessUrl("/hello/business")
-//            .and()
-//            .addFilterBefore(new JWTLoginFilter("/rest/lock", authenticationManager()),
-//                    UsernamePasswordAuthenticationFilter.class)
-//            // And filter other requests to check the presence of JWT in header
-//            .addFilterBefore(new JWTAuthenticationFilter(),
-//                    UsernamePasswordAuthenticationFilter.class)
-//            .logout()
-//            .permitAll();
     }
 
     @Autowired

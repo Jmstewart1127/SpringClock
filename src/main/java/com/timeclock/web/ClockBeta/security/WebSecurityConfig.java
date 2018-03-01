@@ -29,7 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CorsRegistry corsRegistry;
 
-    @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/rest/**")
                 .allowedOrigins("https://spring-clock-ui.herokuapp.com", "http://localhost:3000");

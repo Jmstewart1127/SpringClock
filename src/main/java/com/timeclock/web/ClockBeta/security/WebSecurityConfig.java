@@ -22,9 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
-    @Autowired
-    CorsFilter corsFilter;
-
     @Override
     public void configure(WebSecurity web) throws Exception {
         //Web resources

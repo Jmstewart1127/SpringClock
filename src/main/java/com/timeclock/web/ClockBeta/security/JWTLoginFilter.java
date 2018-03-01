@@ -31,9 +31,9 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
                 .readValue(req.getInputStream(), User.class);
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        creds.getUserName(),
-                        creds.getPassword(),
-                        Collections.emptyList()
+                    creds.getUserName(),
+                    creds.getPassword(),
+                    Collections.emptyList()
                 )
         );
     }
@@ -44,6 +44,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             HttpServletResponse res, FilterChain chain,
             Authentication auth) throws IOException, ServletException {
         TokenAuthenticationService
-                .addAuthentication(res, auth.getName());
+            .addAuthentication(res, auth.getName());
     }
 }

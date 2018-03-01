@@ -20,10 +20,10 @@ class TokenAuthenticationService {
 
     static void addAuthentication(HttpServletResponse res, String username) {
         String JWT = Jwts.builder()
-                .setSubject(username)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
-                .compact();
+            .setSubject(username)
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+            .signWith(SignatureAlgorithm.HS512, SECRET)
+            .compact();
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
     }
 
@@ -32,14 +32,14 @@ class TokenAuthenticationService {
         if (token != null) {
             // parse the token.
             String user = Jwts.parser()
-                    .setSigningKey(SECRET)
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                    .getBody()
-                    .getSubject();
+                .setSigningKey(SECRET)
+                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                .getBody()
+                .getSubject();
 
             return user != null ?
-                    new UsernamePasswordAuthenticationToken(user, null, emptyList()) :
-                    null;
+                new UsernamePasswordAuthenticationToken(user, null, emptyList()) :
+                null;
         }
         return null;
     }

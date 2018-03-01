@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Configuration
 @EnableWebSecurity
-@CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"}, maxAge = 3600)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

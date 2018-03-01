@@ -1,6 +1,7 @@
 package com.timeclock.web.ClockBeta.security;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.security.core.Authentication;
 import javax.servlet.FilterChain;
@@ -13,6 +14,7 @@ import java.io.IOException;
 public class JWTAuthenticationFilter extends GenericFilterBean {
 
     @Override
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"}, maxAge = 3600)
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain filterChain)

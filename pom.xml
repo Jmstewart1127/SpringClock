@@ -11,6 +11,10 @@
 	<name>ClockBeta</name>
 	<description>Demo project for Spring Boot</description>
 
+	<groupId>org.springframework</groupId>
+	<artifactId>gs-rest-service-cors</artifactId>
+	<version>0.1.0</version>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

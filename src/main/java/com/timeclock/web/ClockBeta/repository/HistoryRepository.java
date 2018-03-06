@@ -13,6 +13,8 @@ import com.timeclock.web.ClockBeta.model.History;
 
 public interface HistoryRepository extends CrudRepository<History, Long> {
 
+    Iterable<History> findAllByBizId(int bizId);
+
     Iterable<History> findByUserId(int id);
 
     @Modifying

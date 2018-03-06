@@ -18,6 +18,10 @@ public class HistoryService {
         return historyRepository.findByUserId(id);
     }
 
+    public Iterable<History> findAllByBizId(int bizId) {
+        return historyRepository.findAllByBizId(bizId);
+    }
+
     public void saveHistory(
         int userId,
         Date startTime,

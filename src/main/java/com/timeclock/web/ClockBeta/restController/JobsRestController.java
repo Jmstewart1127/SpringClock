@@ -1,10 +1,8 @@
 package com.timeclock.web.ClockBeta.restController;
 
-import com.timeclock.web.ClockBeta.model.Clock;
 import com.timeclock.web.ClockBeta.model.Jobs;
 import com.timeclock.web.ClockBeta.service.JobsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -30,7 +30,7 @@ public class ScheduleRestController {
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-    @RequestMapping("/rest/jobs/assigned/employee/{clockId}")
+    @RequestMapping("/rest/mobile/jobs/assigned/employee/{clockId}")
     public Iterable<Jobs> showJobAddressesAssignedToEmployee(@PathVariable int clockId) {
         return scheduleService.findJobsAssignedToEmployee(clockId);
     }

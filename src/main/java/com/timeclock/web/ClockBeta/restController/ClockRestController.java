@@ -21,7 +21,7 @@ public class ClockRestController {
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-    @RequestMapping("/rest/get/employee/{id}")
+    @RequestMapping("/rest/mobile/get/employee/{id}")
     public Iterable<Clock> getEmployeeByIdForMobileApp(@PathVariable int id) {
         return clockService.findById(id);
     }
@@ -45,31 +45,31 @@ public class ClockRestController {
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-    @RequestMapping(value = "/rest/clock/in/{id}")
+    @RequestMapping(value = "/rest/mobile/clock/in/{id}")
     public void clockInForMobileApp(@PathVariable int id) {
         clockService.clockIn(id);
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-    @RequestMapping(value = "/rest/clock/out/{id}")
+    @RequestMapping(value = "/rest/mobile/clock/out/{id}")
     public void clockOutForMobileApp(@PathVariable int id) {
         clockService.clockOut(id);
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-    @RequestMapping(value = "/rest/clock/in/{id}/{jobId}")
+    @RequestMapping(value = "/rest/mobile/clock/in/{id}/{jobId}")
     public void clockInAtJobSiteForMobileApp(@PathVariable int id, @PathVariable int jobId) {
         clockService.clockInAtJob(id, jobId);
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-    @RequestMapping(value = "/rest/clock/out/{id}/{jobId}")
+    @RequestMapping(value = "/rest/mobile/clock/out/{id}/{jobId}")
     public void clockOutFromJobSiteForMobileApp(@PathVariable int id, @PathVariable int jobId) {
         clockService.clockOutFromJob(id, jobId);
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-    @RequestMapping(value = "/rest/status/refresh/{id}")
+    @RequestMapping(value = "/rest/mobile/status/refresh/{id}")
     public void refreshEmployeeStatusWithJobId(@PathVariable int id) {
         clockService.refreshClockAndAddLabor(id);
     }

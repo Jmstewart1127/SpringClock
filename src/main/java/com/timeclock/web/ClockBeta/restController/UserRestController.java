@@ -17,18 +17,4 @@ public class UserRestController {
         return userService.findIdByCredentials(username, password);
     }
 
-//    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-//    @RequestMapping(value="/rest/lock/login")
-//    public User loginWithJWT(@RequestBody String username, @RequestBody String password) {
-//        return userService.findIdByCredentials(username, password);
-//    }
-//
-//    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
-//    @RequestMapping(value = "/rest/job/add", method = RequestMethod.POST)
-//    public ResponseEntity<String> addNewJob(@RequestBody Jobs job) {
-//        jobsService.saveJob(job);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
-    
-
 }

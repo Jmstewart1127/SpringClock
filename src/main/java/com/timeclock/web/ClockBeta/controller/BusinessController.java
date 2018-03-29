@@ -1,12 +1,10 @@
 package com.timeclock.web.ClockBeta.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -32,9 +30,6 @@ public class BusinessController {
     @Autowired
     UserAuthDetails userAuthDetails;
 
-    /*
-     * Shows new business form
-     */
     @RequestMapping(value = "/hello/newbusiness", method = RequestMethod.GET)
     public ModelAndView newBiz(ModelAndView modelAndView, Business business, Jobs jobs) {
         modelAndView.addObject(business);
@@ -43,12 +38,11 @@ public class BusinessController {
         return modelAndView;
     }
 
-    /*
-     * Adds business
-     */
     @RequestMapping(value = "/hello/newbusiness", method = RequestMethod.POST)
-    public ModelAndView addNewBusiness(ModelAndView modelAndView, @Valid Business business, @Valid Jobs jobs,
-                                       BindingResult bindingResult, HttpServletRequest request, Authentication auth) {
+    public ModelAndView addNewBusiness(ModelAndView modelAndView,
+                                       @Valid Business business,
+                                       @Valid Jobs jobs,
+                                       Authentication auth) {
         modelAndView.setViewName("showbusinesses");
         modelAndView.addObject(business);
         business.setAdminId(userAuthDetails.getUserId(auth));
@@ -61,9 +55,6 @@ public class BusinessController {
         return modelAndView;
     }
 
-    /*
-     * Shows list of businesses
-     */
     @RequestMapping(value = "/hello/business", method = RequestMethod.GET)
     public ModelAndView showBusinesses(ModelAndView modelAndView, Business business, Authentication auth) {
         modelAndView.setViewName("showbusinesses");

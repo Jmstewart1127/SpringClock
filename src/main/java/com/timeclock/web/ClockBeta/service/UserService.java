@@ -2,7 +2,6 @@ package com.timeclock.web.ClockBeta.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.timeclock.web.ClockBeta.model.User;
 import com.timeclock.web.ClockBeta.model.UserRole;
 import com.timeclock.web.ClockBeta.repository.UserRepository;

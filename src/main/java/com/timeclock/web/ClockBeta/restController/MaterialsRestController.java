@@ -1,7 +1,6 @@
 package com.timeclock.web.ClockBeta.restController;
 
 import com.timeclock.web.ClockBeta.model.Material;
-import com.timeclock.web.ClockBeta.model.Schedule;
 import com.timeclock.web.ClockBeta.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

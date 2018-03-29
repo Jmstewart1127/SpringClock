@@ -1,13 +1,9 @@
-/**
- *
- */
 package com.timeclock.web.ClockBeta.logistics;
 
 import java.util.Date;
 
 /**
  * @author Jacob Stewart
- * <p>
  * Calculates employee hours when clocking in and out.
  */
 public class ClockLogic {
@@ -22,8 +18,7 @@ public class ClockLogic {
     private double shiftPay;
     private double weeklyPay;
 
-    public ClockLogic() {
-    }
+    public ClockLogic() {}
 
     public Date getStartTime() {
         return startTime;

@@ -1,9 +1,7 @@
 package com.timeclock.web.ClockBeta.service;
 
-import com.timeclock.web.ClockBeta.model.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.timeclock.web.ClockBeta.logistics.PaymentLogic;
 import com.timeclock.web.ClockBeta.model.Jobs;
 import com.timeclock.web.ClockBeta.repository.JobsRepository;

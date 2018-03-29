@@ -116,7 +116,8 @@ public class ClockController {
     public ModelAndView processClockFormAdmin(
         ModelAndView modelAndView,
         @Valid Clock clock, Business business,
-        @PathVariable int id) {
+        @PathVariable int id)
+    {
 
         Boolean isClocked = clockService.findClockedInById(id);
 
@@ -144,9 +145,8 @@ public class ClockController {
     public ModelAndView processEmployeeEditForm(
         ModelAndView modelAndView,
         @Valid Clock clock,
-        BindingResult bindingResult,
-        HttpServletRequest request) {
-
+        BindingResult bindingResult)
+    {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("updatejobstatus");
         } else {
@@ -163,8 +163,7 @@ public class ClockController {
         @Valid Clock clock,
         Business business,
         @PathVariable int id) {
-
-        int bizId = clockService.findBizIdById(id); // Store bizId before deleting user
+        int bizId = clockService.findBizIdById(id);
         Clock user = clockService.findEmployeeById(id);
         clockService.delete(user);
         return this.showClock(modelAndView, clock, business, bizId);

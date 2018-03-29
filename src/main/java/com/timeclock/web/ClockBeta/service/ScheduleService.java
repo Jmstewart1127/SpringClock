@@ -6,7 +6,6 @@ import com.timeclock.web.ClockBeta.model.Schedule;
 import com.timeclock.web.ClockBeta.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 

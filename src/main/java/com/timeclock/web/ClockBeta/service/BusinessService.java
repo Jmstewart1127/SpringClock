@@ -3,9 +3,7 @@ package com.timeclock.web.ClockBeta.service;
 import com.timeclock.web.ClockBeta.logistics.UserAuthDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-
 import com.timeclock.web.ClockBeta.model.Business;
 import com.timeclock.web.ClockBeta.repository.BusinessRepository;
 

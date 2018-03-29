@@ -2,13 +2,10 @@ package com.timeclock.web.ClockBeta.service;
 
 import java.util.ArrayList;
 import java.util.Date;
-
 import com.timeclock.web.ClockBeta.model.Business;
-import com.timeclock.web.ClockBeta.model.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-
 import com.timeclock.web.ClockBeta.logistics.ClockLogic;
 import com.timeclock.web.ClockBeta.logistics.UserAuthDetails;
 import com.timeclock.web.ClockBeta.model.Clock;

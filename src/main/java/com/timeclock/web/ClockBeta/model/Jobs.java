@@ -19,6 +19,10 @@ public class Jobs {
     private String jobName;
     @Column(name = "job_address")
     private String jobAddress;
+    @Column(name = "latitude")
+    private double latitude;
+    @Column(name = "longitude")
+    private double longitude;
     @Column(name = "category")
     private String category;
     @Column(name = "customer_name")
@@ -72,6 +76,22 @@ public class Jobs {
 
     public void setJobAddress(String jobAddress) {
         this.jobAddress = jobAddress;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getCategory() {

@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/img/**");
         web.ignoring().antMatchers("/register");
         web.ignoring().antMatchers("/rest/mobile/**");
+        web.ignoring().antMatchers("/rest/user/**");
     }
 
     @Override

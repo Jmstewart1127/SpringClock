@@ -40,10 +40,9 @@ public class UserController {
 
     // Process form input data
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView processRegistrationForm(ModelAndView modelAndView,
-                                                @Valid User user, BindingResult bindingResult, @RequestParam String password,
-                                                @RequestParam String password1,
-                                                HttpServletRequest request) {
+    public ModelAndView processRegistrationForm(
+            ModelAndView modelAndView,
+            @Valid User user, BindingResult bindingResult) {
 
         // Lookup user in database by id
         User userExists = userService.findById(user.getId());

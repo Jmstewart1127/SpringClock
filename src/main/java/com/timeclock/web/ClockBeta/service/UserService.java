@@ -20,9 +20,12 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User saveUser(User user) {
-        user.setEnabled(true);
-        return userRepository.save(user);
+    public void saveUser(User user) {
+        User userExists = findById(user.getId());
+        if (userExists == null) {
+            user.setEnabled(true);
+            userRepository.save(user);
+        }
     }
 
     public UserRole saveUserRole(UserRole userRole) {

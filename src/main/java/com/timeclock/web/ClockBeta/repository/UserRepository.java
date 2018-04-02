@@ -10,6 +10,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     User findById(int id);
 
+    User findUserByUserName(String username);
+
     User findByUserNameAndPassword(String username, String password);
 
     @Query("SELECT id FROM com.timeclock.web.ClockBeta.model.User WHERE user_name= :username")

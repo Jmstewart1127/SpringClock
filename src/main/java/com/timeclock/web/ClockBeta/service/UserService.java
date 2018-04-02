@@ -21,15 +21,27 @@ public class UserService {
     }
 
     public void saveUser(User user) {
-        User userExists = findById(user.getId());
+        User userExists = findUserByUserName(user.getUserName());
         if (userExists == null) {
             user.setEnabled(true);
+            createUserRole(user.getUserName(), user.getRole());
             userRepository.save(user);
         }
     }
 
-    public UserRole saveUserRole(UserRole userRole) {
-        return userRoleRepository.save(userRole);
+    private void createUserRole(String username, String role) {
+        UserRole userRole = new UserRole();
+        userRole.setUserName(username);
+        userRole.setRole(role);
+        saveUserRole(userRole);
+    }
+
+    private void saveUserRole(UserRole userRole) {
+        userRoleRepository.save(userRole);
+    }
+
+    private User findUserByUserName(String username) {
+        return userRepository.findUserByUserName(username);
     }
 
     public int getIdByUserName(String userName) {

@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/fonts/**");
         web.ignoring().antMatchers("/img/**");
         web.ignoring().antMatchers("/register");
-        web.ignoring().antMatchers("/rest/**"); // Temporarily
+//        web.ignoring().antMatchers("/rest/**"); // Temporarily
         web.ignoring().antMatchers("/rest/mobile/**");
         web.ignoring().antMatchers("/rest/user/**");
     }
@@ -43,28 +43,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     @CrossOrigin
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-            .antMatchers("/", "/hello").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/login")
-            .permitAll()
-            .defaultSuccessUrl("/hello/business")
-            .and()
-            .logout()
-            .permitAll();
-//        http.csrf().disable().authorizeRequests()                         // TEMPORARY //
-//            .antMatchers("/").permitAll()
-//            .antMatchers(HttpMethod.POST, "/login").permitAll()
+//        http
+//            .authorizeRequests()
+//            .antMatchers("/", "/hello").permitAll()
 //            .anyRequest().authenticated()
 //            .and()
-//            .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
-//            .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
-//                    UsernamePasswordAuthenticationFilter.class)
-//            .addFilterBefore(new JWTAuthenticationFilter(),
-//                    UsernamePasswordAuthenticationFilter.class);
+//            .formLogin()
+//            .loginPage("/login")
+//            .permitAll()
+//            .defaultSuccessUrl("/hello/business")
+//            .and()
+//            .logout()
+//            .permitAll();
+        http.csrf().disable().authorizeRequests()                         // TEMPORARY //
+            .antMatchers("/").permitAll()
+            .antMatchers(HttpMethod.POST, "/login").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
+            .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
+                    UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new JWTAuthenticationFilter(),
+                    UsernamePasswordAuthenticationFilter.class);
     }
 
     @Autowired

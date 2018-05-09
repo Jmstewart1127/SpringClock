@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import com.timeclock.web.ClockBeta.logistics.PaymentLogic;
 import com.timeclock.web.ClockBeta.model.Jobs;
 import com.timeclock.web.ClockBeta.repository.JobsRepository;
-
 import java.util.ArrayList;
-import java.util.Collection;
 
 @Service
 public class JobsService {
@@ -46,23 +44,23 @@ public class JobsService {
         return jobsRepository.findByCustomerName(customer);
     }
 
-    public double findTotalAmountChargedById(int id) {
+    private double findTotalAmountChargedById(int id) {
         return jobsRepository.findAmountChargedById(id);
     }
 
-    public double findBalanceDueById(int id) {
+    private double findBalanceDueById(int id) {
         return jobsRepository.findAmountDueById(id);
     }
 
-    public double findAmountPaidById(int id) {
+    private double findAmountPaidById(int id) {
         return jobsRepository.findAmountPaidById(id);
     }
 
-    public void updateAmountDueById(int id, double amountPaid, double amountDue) {
+    private void updateAmountDueById(int id, double amountPaid, double amountDue) {
         jobsRepository.updateAmountDue(id, amountPaid, amountDue);
     }
 
-    public int findIdByCustomerName(String customerName) {
+    private int findIdByCustomerName(String customerName) {
         return jobsRepository.findIdByCustomerName(customerName);
     }
 
@@ -71,7 +69,7 @@ public class JobsService {
         jobsRepository.deleteJob(id);
     }
 
-    public void isPaid(int id, Boolean bool) {
+    private void isPaid(int id, Boolean bool) {
         jobsRepository.isPaid(id, bool);
     }
 
@@ -87,7 +85,7 @@ public class JobsService {
         jobsRepository.updateLaborCost(jobId, jobsRepository.findLaborCostById(jobId) + laborAmount);
     }
 
-    public void checkIfPaid(int id, double totalPaid) {
+    private void checkIfPaid(int id, double totalPaid) {
         if (findTotalAmountChargedById(id) == totalPaid) {
             isPaid(id, true);
         }
@@ -103,20 +101,14 @@ public class JobsService {
         checkIfPaid(id, totalAmountPaid);
     }
 
-    private ArrayList<Integer> getAllBusinessIdsByUserId(int userId) {
-        Iterable<Business> allBusiensses = businessService.findBusinessesByUserId(userId);
-        ArrayList<Integer> businessIds = new ArrayList<>();
-        for (Business business : allBusiensses) {
-            businessIds.add(business.getId());
-        }
-        return businessIds;
-    }
-
-    public ArrayList<Iterable<Jobs>> findAllJobsByUserId(int userId) {
-        ArrayList<Integer> businessIds = getAllBusinessIdsByUserId(userId);
-        ArrayList<Iterable<Jobs>> allJobs = new ArrayList<>();
-        for (int businessId : businessIds) {
-            allJobs.add(findByBizId(businessId));
+    public ArrayList<Jobs> findAllJobsByUserId(int userId) {
+        Iterable<Business> allBusinesses = businessService.findBusinessesByUserId(userId);
+        ArrayList<Jobs> allJobs = new ArrayList<>();
+        for (Business business : allBusinesses) {
+            Iterable<Jobs> jobsByBusiness = findByBizId(business.getId());
+            for (Jobs job : jobsByBusiness) {
+                allJobs.add(job);
+            }
         }
         return allJobs;
     }

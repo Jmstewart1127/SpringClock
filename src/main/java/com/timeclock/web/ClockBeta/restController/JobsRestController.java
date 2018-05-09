@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 
 @RestController
@@ -35,7 +34,7 @@ public class JobsRestController {
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping("/rest/jobs/all/by/user/{userId}")
-    public ArrayList<Iterable<Jobs>> showJobsByUserId(@PathVariable int userId) {
+    public ArrayList<Jobs> showJobsByUserId(@PathVariable int userId) {
         return jobsService.findAllJobsByUserId(userId);
     }
 

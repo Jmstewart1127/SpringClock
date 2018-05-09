@@ -1,13 +1,20 @@
 package com.timeclock.web.ClockBeta.service;
 
+import com.timeclock.web.ClockBeta.model.Business;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.timeclock.web.ClockBeta.logistics.PaymentLogic;
 import com.timeclock.web.ClockBeta.model.Jobs;
 import com.timeclock.web.ClockBeta.repository.JobsRepository;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @Service
 public class JobsService {
+
+    @Autowired
+    BusinessService businessService;
 
     @Autowired
     JobsRepository jobsRepository;
@@ -94,6 +101,24 @@ public class JobsService {
         double newAmountDue = pl.getBalanceDue();
         updateAmountDueById(id, totalAmountPaid, newAmountDue);
         checkIfPaid(id, totalAmountPaid);
+    }
+
+    private ArrayList<Integer> getAllBusinessIdsByUserId(int userId) {
+        Iterable<Business> allBusiensses = businessService.findBusinessesByUserId(userId);
+        ArrayList<Integer> businessIds = new ArrayList<>();
+        for (Business business : allBusiensses) {
+            businessIds.add(business.getId());
+        }
+        return businessIds;
+    }
+
+    public ArrayList<Iterable<Jobs>> findAllJobsByUserId(int userId) {
+        ArrayList<Integer> businessIds = getAllBusinessIdsByUserId(userId);
+        ArrayList<Iterable<Jobs>> allJobs = new ArrayList<>();
+        for (int businessId : businessIds) {
+            allJobs.add(findByBizId(businessId));
+        }
+        return allJobs;
     }
 
     public Jobs saveJob(Jobs job) {

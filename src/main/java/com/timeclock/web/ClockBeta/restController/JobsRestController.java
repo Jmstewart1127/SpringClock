@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 public class JobsRestController {
 
@@ -29,6 +31,12 @@ public class JobsRestController {
     @RequestMapping("/rest/jobs/all/{bizId}")
     public Iterable<Jobs> showJobsByBizId(@PathVariable int bizId) {
         return jobsService.findByBizId(bizId);
+    }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping("/rest/jobs/all/by/user/{userId}")
+    public ArrayList<Iterable<Jobs>> showJobsByUserId(@PathVariable int userId) {
+        return jobsService.findAllJobsByUserId(userId);
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})

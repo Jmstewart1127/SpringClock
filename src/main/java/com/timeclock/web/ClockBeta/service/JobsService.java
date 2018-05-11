@@ -78,11 +78,17 @@ public class JobsService {
     }
 
     public void updateMaterialCost(int id, double materialCost) {
+        materialCost += findMaterialCostById(id);
         jobsRepository.updateMaterialCost(id, materialCost);
     }
 
-    public void updateLaborCost(int jobId, double laborAmount) {
-        jobsRepository.updateLaborCost(jobId, jobsRepository.findLaborCostById(jobId) + laborAmount);
+    public double findLaborCostById(int id) {
+        return jobsRepository.findLaborCostById(id);
+    }
+
+    public void updateLaborCost(int id, double laborAmount) {
+        laborAmount += findLaborCostById(id);
+        jobsRepository.updateLaborCost(id, laborAmount);
     }
 
     private void checkIfPaid(int id, double totalPaid) {

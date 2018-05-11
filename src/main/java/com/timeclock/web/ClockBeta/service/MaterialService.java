@@ -6,9 +6,11 @@ import com.timeclock.web.ClockBeta.repository.MaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class MaterialService {
+
+    @Autowired
+    JobsService jobsService;
 
     @Autowired
     MaterialRepository materialRepository;
@@ -21,6 +23,7 @@ public class MaterialService {
     }
 
     public void saveMaterial(Material material) {
+        jobsService.updateMaterialCost(material.getJobId(), material.getTotalPrice());
         materialRepository.save(material);
     }
 

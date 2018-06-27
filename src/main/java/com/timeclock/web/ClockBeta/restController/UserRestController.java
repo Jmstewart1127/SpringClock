@@ -20,6 +20,12 @@ public class UserRestController {
     }
 
     @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
+    @RequestMapping(value="/rest/login", method = RequestMethod.POST)
+    public User login(@RequestBody User user) {
+        return userService.findIdByCredentials(user.getUserName(), user.getPassword());
+    }
+
+    @CrossOrigin(origins = {"https://spring-clock-ui.herokuapp.com", "http://localhost:3000"})
     @RequestMapping(value = "/rest/user/create", method = RequestMethod.POST)
     public ResponseEntity<String> addNewUser(@RequestBody User user) {
         userService.saveUser(user);

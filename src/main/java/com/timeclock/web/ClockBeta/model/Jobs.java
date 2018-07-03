@@ -46,6 +46,25 @@ public class Jobs {
         super();
     }
 
+    public Jobs(int bizId, String jobName, String jobAddress, double latitude, double longitude, String category,
+                String customerName, double amountCharged, double amountDue, double amountPaid, Boolean isPaid,
+                double materialCost, double laborCost, LocalDate completionDate) {
+        this.bizId = bizId;
+        this.jobName = jobName;
+        this.jobAddress = jobAddress;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.category = category;
+        this.customerName = customerName;
+        this.amountCharged = amountCharged;
+        this.amountDue = amountDue;
+        this.amountPaid = amountPaid;
+        this.isPaid = isPaid;
+        this.materialCost = materialCost;
+        this.laborCost = laborCost;
+        this.completionDate = completionDate;
+    }
+
     public int getId() {
         return id;
     }

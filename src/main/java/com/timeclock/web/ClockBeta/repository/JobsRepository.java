@@ -17,6 +17,9 @@ public interface JobsRepository extends CrudRepository<Jobs, Long> {
 
     Iterable<Jobs> findByBizId(int bizId);
 
+    @Transactional
+    void removeJobsById(int id);
+
     @Query("SELECT jobAddress FROM com.timeclock.web.ClockBeta.model.Jobs"
         + " WHERE bizId= :bizId")
     Iterable<Jobs> findAddressByBizId(@Param("bizId") int bizId);

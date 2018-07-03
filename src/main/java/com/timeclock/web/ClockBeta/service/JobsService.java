@@ -66,7 +66,11 @@ public class JobsService {
 
     public void deleteJob(int id) {
         scheduleService.deleteSchedulesByJobId(id);
-        jobsRepository.deleteJob(id);
+        jobsRepository.removeJobsById(id);
+    }
+
+    public void deleteJob(Jobs job) {
+        jobsRepository.delete(job);
     }
 
     private void isPaid(int id, Boolean bool) {

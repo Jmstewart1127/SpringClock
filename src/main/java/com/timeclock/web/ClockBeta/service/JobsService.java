@@ -69,10 +69,6 @@ public class JobsService {
         jobsRepository.removeJobsById(id);
     }
 
-    public void deleteJob(Jobs job) {
-        jobsRepository.delete(job);
-    }
-
     private void isPaid(int id, Boolean bool) {
         jobsRepository.isPaid(id, bool);
     }
@@ -123,8 +119,8 @@ public class JobsService {
         return allJobs;
     }
 
-    public Jobs saveJob(Jobs job) {
-        return jobsRepository.save(job);
+    public void saveJob(Jobs job) {
+        jobsRepository.save(job);
     }
 
 }
